@@ -1,18 +1,18 @@
 # PSoC 6 MCU: Basic Device Firmware Upgrade (DFU)
 
-This example demonstrates basic device firmware update (DFU), also known as "bootloading", with PSoC® 6 MCU. This includes downloading an application from a host and installing it in device flash, and then transferring control to that application. This example bundles two applications:
+This example demonstrates basic device firmware update (DFU), also known as "bootloading", with PSoC&trade; 6 MCU. This includes downloading an application from a host and installing it in device flash, and then transferring control to that application. This example bundles two applications:
 
-**Bootloader app:** Implements a [DFUSDK](https://github.com/cypresssemiconductorco/dfu)-based basic bootloader application run by the CM4+ CPU. The bootloader handles image download, verification, and upgrades. When the image is valid, the bootloader lets the CM4 CPU boot the application.
+**Bootloader app:** Implements a [DFU Middleware library](https://github.com/cypresssemiconductorco/dfu)-based basic bootloader application run by the CM4+ CPU. The bootloader handles image download, verification, and upgrades. When the image is valid, the bootloader lets the CM4 CPU boot the application.
 
 **Blinky app:** This is a tiny application run by the CM4 CPU that blinks an LED at a 5-Hz rate continuously. This application transfers control to the bootloader when the user button is pressed.
 
-**Note:** This example supports only *I2C* and *UART* for DFU transport currently.
+**Note:** This example supports only *I2C*, *UART*, and *USB_CDC* for DFU transport currently.
 
-[Provide feedback on this Code Example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMzI1MDQiLCJTcGVjIE51bWJlciI6IjAwMi0zMjUwNCIsIkRvYyBUaXRsZSI6IlBTb0MgNiBNQ1U6IEJhc2ljIERldmljZSBGaXJtd2FyZSBVcGdyYWRlIChERlUpIiwicmlkIjoicnhodiIsIkRvYyB2ZXJzaW9uIjoiMS4wLjAiLCJEb2MgTGFuZ3VhZ2UiOiJFbmdsaXNoIiwiRG9jIERpdmlzaW9uIjoiTUNEIiwiRG9jIEJVIjoiSUNXIiwiRG9jIEZhbWlseSI6IlBTT0MifQ==)
+[Provide feedback on this Code Example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMzI1MDQiLCJTcGVjIE51bWJlciI6IjAwMi0zMjUwNCIsIkRvYyBUaXRsZSI6IlBTb0MgNiBNQ1U6IEJhc2ljIERldmljZSBGaXJtd2FyZSBVcGdyYWRlIChERlUpIiwicmlkIjoicnhodiIsIkRvYyB2ZXJzaW9uIjoiMS4xLjAiLCJEb2MgTGFuZ3VhZ2UiOiJFbmdsaXNoIiwiRG9jIERpdmlzaW9uIjoiTUNEIiwiRG9jIEJVIjoiSUNXIiwiRG9jIEZhbWlseSI6IlBTT0MifQ==)
 
 ## Requirements
 
-- [ModusToolbox® software](https://www.cypress.com/products/modustoolbox-software-environment) v2.2.1
+- [ModusToolbox&trade; software](https://www.cypress.com/products/modustoolbox-software-environment) v2.2.1
 
     **Note:** This code example version requires ModusToolbox software version 2.2.1 or later and is not backward compatible with v2.2 or older versions.
 
@@ -20,15 +20,15 @@ This example demonstrates basic device firmware update (DFU), also known as "boo
 
 - Programming Language: C
 
-- Associated Parts: All [PSoC® 6 MCU](http://www.cypress.com/PSoC6) parts
+- Associated Parts: All [PSoC&trade; 6 MCU](http://www.cypress.com/PSoC6) parts
 
-## Supported Toolchains (make variable 'TOOLCHAIN')
+## Supported toolchains (make variable 'TOOLCHAIN')
 
 - GNU Arm® Embedded Compiler v9.3.1 (`GCC_ARM`) - Default value of `TOOLCHAIN`
 - Arm compiler v6.13 (`ARM`)
 - IAR C/C++ compiler v8.42.2 (`IAR`)
 
-## Supported Kits (make variable 'TARGET')
+## Supported kits (make variable 'TARGET')
 
 - [PSoC 6 BLE Pioneer Kit](https://www.cypress.com/CY8CKIT-062-BLE) (`CY8CKIT-062-BLE`) - Default value of `TARGET`
 - [PSoC 6 Wi-Fi BT Prototyping Kit](https://www.cypress.com/CY8CPROTO-062-4343W) (`CY8CPROTO-062-4343W`)
@@ -39,34 +39,34 @@ This example demonstrates basic device firmware update (DFU), also known as "boo
 - [PSoC 62S1 Wi-Fi BT Pioneer Kit](https://www.cypress.com/CYW9P62S1-43012EVB-01) (`CYW9P62S1-43012EVB-01`)
 - [PSoC 62S3 Wi-Fi BT Prototyping Kit](https://www.cypress.com/CY8CPROTO-062S3-4343W) (`CY8CPROTO-062S3-4343W`)
 
-## Supported Transports (make variable 'TRANSPORT_OPT')
+## Supported transports (make variable 'TRANSPORT_OPT')
 
-Default transport is I2C. Refer [Operation](## Operation) section for instructions to change the `TRANSPORT_OPT`.
+The default transport is I2C. See the [Operation](#operation) section for instructions to change  `TRANSPORT_OPT`.
 
-| TARGET | UART | I2C |
-| :---- | :---- | :---- |
-| CY8CKIT-062-BLE | Yes | Yes |
-| CY8CPROTO-062-4343W | Yes | Yes |
-| CY8CKIT-062-WIFI-BT | Yes | Yes |
-| CY8CPROTO-063-BLE | Yes | Yes |
-| CY8CKIT-062S2-43012 | Yes | Yes |
-| CYW9P62S1-43438EVB-01 | Yes | Yes |
-| CYW9P62S1-43012EVB-01 | Yes | Yes |
-| CY8CPROTO-062S3-4343W | Yes | Yes |
+| TARGET | UART | I2C | USB_CDC |
+| :----- | :--- | :--- | :----- |
+| CY8CKIT-062-BLE | Yes | Yes | No |
+| CY8CPROTO-062-4343W | Yes | Yes | Yes |
+| CY8CKIT-062-WIFI-BT | Yes | Yes | Yes |
+| CY8CPROTO-063-BLE | Yes | Yes | No |
+| CY8CKIT-062S2-43012 | Yes | Yes | Yes |
+| CYW9P62S1-43438EVB-01 | Yes | Yes | Yes |
+| CYW9P62S1-43012EVB-01 | Yes | Yes | Yes |
+| CY8CPROTO-062S3-4343W | Yes | Yes | Yes |
 
-## Hardware Setup
+## Hardware setup
 
 This example uses the board's default configuration. See the kit user guide to ensure that the board is configured correctly.
 
-**Note:** The PSoC 6 BLE Pioneer Kit (CY8CKIT-062-BLE) and the PSoC 6 WiFi-BT Pioneer Kit (CY8CKIT-062-WIFI-BT) ship with KitProg2 installed. The ModusToolbox software requires KitProg3. Before using this code example, make sure that the board is upgraded to KitProg3. The tool and instructions are available in the [Firmware Loader](https://github.com/cypresssemiconductorco/Firmware-loader) GitHub repository. If you do not upgrade, you will see an error like "unable to find CMSIS-DAP device" or "KitProg firmware is out of date".
+**Note:** The PSoC 6 BLE pioneer kit (CY8CKIT-062-BLE) and the PSoC 6 WiFi-BT pioneer kit (CY8CKIT-062-WIFI-BT) ship with KitProg2 installed. The ModusToolbox software requires KitProg3. Before using this code example, make sure that the board is upgraded to KitProg3. The tool and instructions are available in the [Firmware Loader](https://github.com/cypresssemiconductorco/Firmware-loader) GitHub repository. If you do not upgrade, you will see an error like "unable to find CMSIS-DAP device" or "KitProg firmware is out of date".
 
-## Software Setup
+## Software setup
 
 Install a terminal emulator if you don't have one. Instructions in this document use [Tera Term](https://ttssh2.osdn.jp/index.html.en).
 
 This example requires no additional software or tools.
 
-## Using the Code Example
+## Using the code example
 
 Create the project and open it using one of the following:
 
@@ -126,6 +126,68 @@ Various CLI tools include a `-h` option that prints help information to the term
 
 3. Follow the instructions displayed in the terminal to create or import the application as an IDE project.
 
+ **Instructions for using Keil**
+
+   1. To export to Keil, MDK Compiler must be installed. See [ModusToolBox User Guide](https://www.cypress.com/file/512716/download) chapter **Export to Keil µVision 5** for instructions.
+
+      **Note:** Before running the `make uvision5` command, make sure that `CY_COMPILER_PATH` in Makefile is set to the compiler's *\bin* directory. See [KBA229177](https://community.cypress.com/t5/Knowledge-Base-Articles/Managing-the-Makefile-for-ModusToolbox-v2-x-KBA229177/ta-p/250624) to learn how to manage the Makefile.
+
+   2. Generate the *.cyacd2* file in Keil uVision as follows:
+
+      1. On the *Output* tab, append the *.elf* extension to change the name of the executable to generate *\<Application Name>.elf* on build.
+
+      2. On the *User* tab, add post-build instructions to generate the *.cyacd2* file. You can write post-build commands as follows:
+
+          *Post-build command 1*:
+       \<Install path of ModusToolbox>/tools_2.2/cymcuelftool-1.0/bin/cymcuelftool.exe --sign {Local Path to \<Application Name>.elf} CRC --output {Local Path to generate \<Application Name>_crc.elf} ;
+
+          *Post-build command 2*:
+       \<Install path of ModusToolbox>/tools_2.2/cymcuelftool-1.0/bin/cymcuelftool.exe -P {Local Path to \<Application Name>_crc.elf} --output {Local Path to generate \<Application Name>_crc.cyacd2} ;
+
+          Example:
+
+          *Post-build command 1* (Run#1):
+       ```
+       C:/Users/<USERNAME>/ModusToolbox/tools_2.2/cymcuelftool-1.0/bin/cymcuelftool.exe --sign C:/ModusWorkspace/mtb-example-psoc6-dfu-basic/blinky_cm4/blinky_cm4_build/blinky_cm4.elf CRC --output C:/ModusWorkspace/mtb-example-psoc6-dfu-basic/blinky_cm4/blinky_cm4_build/blinky_cm4_crc.elf ;
+       ```
+          *Post-build command 2* (Run#2):
+       ```
+       C:/Users/<USERNAME>/ModusToolbox/tools_2.2/cymcuelftool-1.0/bin/cymcuelftool.exe -P C:/ModusWorkspace/mtb-example-psoc6-dfu-basic/blinky_cm4/blinky_cm4_build/blinky_cm4_crc.elf --output C:/ModusWorkspace/mtb-example-psoc6-dfu-basic/blinky_cm4/blinky_cm4_build/blinky_cm4_crc.cyacd2 ;
+       ```
+
+   **Figure 1. Keil post-build steps**
+
+![](images/keil-post-build.png)
+
+**Instructions for using IAR**
+
+   1. To export to IAR, IAR compiler must be installed. See [ModusToolBox User Guide](https://www.cypress.com/file/512716/download) chapter **Export IAR EWARM** for instructions.
+
+      **Note:** Before running the `make ewarm8` command, make sure that `CY_COMPILER_PATH` in Makefile is set to the compiler's *\bin* directory. See [KBA229177](https://community.cypress.com/t5/Knowledge-Base-Articles/Managing-the-Makefile-for-ModusToolbox-v2-x-KBA229177/ta-p/250624) to learn how to manage the Makefile.
+
+   2. Generate the *.cyacd2* file in IAR EW for Arm as follows:
+
+      1. Use **Project** > **Options** > **Linker** > *Output* tab to change the output file extension from *.out* to *.elf*.
+
+      2. Create a *.bat* file in the project directory using any text editor for post-build operation to generate a *.cyacd2* file. You can write the post-build command in a *.bat* file as follows:
+
+         *Post-build command* (Syntax):
+
+      \<Install path of ModusToolbox>/tools_2.2/cymcuelftool-1.0/bin/cymcuelftool.exe --sign {Local Path to \<Application Name>.elf} CRC --output {Local Path to generate \<Application Name>_crc.elf} && \<Install path of ModusToolbox>/tools_2.2/cymcuelftool-1.0/bin/cymcuelftool.exe -P {Local Path to \<Application Name>_crc.elf} --output {Local Path to generate \<Application Name>_crc.cyacd2}
+
+         Example:
+
+         *Post-build command* (RUN):
+      ```
+      C:/Users/<USERNAME>/ModusToolbox/tools_2.2/cymcuelftool-1.0/bin/cymcuelftool.exe --sign C:/ModusWorkspace/mtb-example-psoc6-dfu-basic/blinky_cm4/Debug/Exe/blinky_cm4.elf CRC --output C:/ModusWorkspace/mtb-example-psoc6-dfu-basic/blinky_cm4/Debug/Exe/blinky_cm4_crc.elf && C:/Users/<USERNAME>/ModusToolbox/tools_2.2/cymcuelftool-1.0/bin/cymcuelftool.exe -P C:/ModusWorkspace/mtb-example-psoc6-dfu-basic/blinky_cm4/Debug/Exe/blinky_cm4_crc.elf --output C:/ModusWorkspace/mtb-example-psoc6-dfu-basic/blinky_cm4/Debug/Exe/blinky_cm4_crc.cyacd2
+      ```
+
+      3. On **Project** > **Options** > **Build Actions** tab, select the path to the *.bat* file created for post-build operation, and click **OK**.
+
+   **Figure 2. IAR Post-build steps**
+
+![](images/iar-post-build.png)
+
 </details>
 
 ## Operation
@@ -156,7 +218,7 @@ Various CLI tools include a `-h` option that prints help information to the term
       ```
 </details>
 
-3. After programming, press the *RESET Button* on the board. The bootloader starts automatically and starts blinking the LED. Confirm that the kit LED blinks at approximately 1 Hz.
+3. After programming, press the *RESET* button on the board. The bootloader starts automatically and starts blinking the LED. Confirm that the kit LED blinks at approximately 1 Hz.
 
 4. Generate an upgradable application image using one of the following. On a successful build, an *\<APPNAME>.cyacd2* file will be generated.
 
@@ -182,88 +244,29 @@ Various CLI tools include a `-h` option that prints help information to the term
 
 </details>
 
-5. Perform device firmware upgrade using the DFU Host Tool:
+5. Perform device firmware upgrade using the DFU Host tool:
 
-   1. Open the [DFU Host Tool](https://www.cypress.com/file/504426/download). Connect to the device using the transport configured.
+   1. Open the [DFU Host tool](https://www.cypress.com/file/504426/download). Connect to the device using the transport configured.
 
-   2. Select *blinky_crc.cyacd2* from the file browse option window. By default, it will be generated under `mtb-example-psoc6-dfu-basic/<blinky_cm4>/build/` path on successful build.
+   2. Select *blinky_crc.cyacd2*. By default, it will be generated in the *mtb-example-psoc6-dfu-basic/<blinky_cm4>/build/* directory on a successful build.
 
    3. Select an appropriate port based on the transport (`TRANSPORT_OPT`) configured in the bootloader. *I2C* is the default transport configuration. Select *400kHz* speed, set address to *12*, and then click **Program**.
 
    4. Observe the image download progress status on the progress bar, and wait for the download to complete.
 
-      **Note:** See [DFU Host Tool](https://www.cypress.com/file/504426/download) for further details on selecting a port and configuring it for communication based on the transport enabled in bootloader.
+      **Note:** See [DFU Host Tool](https://www.cypress.com/file/504426/download) for further details on selecting a port and configuring it for communication based on the transport enabled in the bootloader.
 
-**Figure 1. Downloading the Application Using the DFU Host Tool**
+**Figure 3. Downloading the application using the DFU Host tool**
 
 ![](images/dfu-operation.png)
 
 After a successful download, the device will boot to *blinky_cm4*. Observe the user LED blinking at 5 Hz.
 
-### Switching Between *bootloader* and *application*
+### Switching between *bootloader* and *application*
 
 Dynamic switching between the bootloader and the application is enabled with user button events. Press the user button to switch to the bootloader while the application is running. Similarly, press the user button to switch to the application while the bootloader is running. Note that a switching request will be honored by the bootloader only if there is a valid application in the memory.
 
-**NOTE:** Build the App0 and App1 projects with the same toolchain. Application transfer may fail otherwise. Check the Build Settings for each project.
-
-### Instructions for using Keil
-1. To export to Keil, MDK Compiler must be installed. Please refer [ModusToolBox](https://www.cypress.com/products/modustoolbox-software-environment) User guide chapter **Export to Keil µVision 5** for instructions.
-   
-   **Note:** Before running `make uvision5` command make sure that CY_COMPILER_PATH in Makefile is set to Compilers bin directory. Please refer [KBA229177](https://community.cypress.com/t5/Knowledge-Base-Articles/Managing-the-Makefile-for-ModusToolbox-v2-x-KBA229177/ta-p/250624) to manage the Makefile.
-
-2. Generate the *.cyacd2* file in Keil uVision as follows:
-
-   1. Under *Output* tab, append *.elf* extension to change the name of the executable to generate \<Application Name>.elf on build. 
-
-   2. Under *User* tab add post build instructions to generate *.cyacd2* file. You can write Post build commands as follows:
-
-	   *Post build command 1* :
-	   \<Install path of ModusToolbox>/tools_2.2/cymcuelftool-1.0/bin/cymcuelftool.exe --sign {Local Path to \<Application Name>.elf} CRC --output {Local Path to generate \<Application Name>_crc.elf} ;
-	
-	   *Post build command 2* :
-	   \<Install path of ModusToolbox>/tools_2.2/cymcuelftool-1.0/bin/cymcuelftool.exe -P {Local Path to \<Application Name>_crc.elf} --output {Local Path to generate \<Application Name>_crc.cyacd2} ;
-	
-	   Example :
-	
-	   *Post build command 1* (Run#1):
-	   ```
-	   C:/Users/<USERNAME>/ModusToolbox/tools_2.2/cymcuelftool-1.0/bin/cymcuelftool.exe --sign C:/ModusWorkspace/mtb-example-psoc6-dfu-basic/blinky_cm4/blinky_cm4_build/blinky_cm4.elf CRC --output C:/ModusWorkspace/mtb-example-psoc6-dfu-basic/blinky_cm4/blinky_cm4_build/blinky_cm4_crc.elf ;
-	   ```
-	   *Post build command 2* (Run#2):
-	   ```
-	   C:/Users/<USERNAME>/ModusToolbox/tools_2.2/cymcuelftool-1.0/bin/cymcuelftool.exe -P C:/ModusWorkspace/mtb-example-psoc6-dfu-basic/blinky_cm4/blinky_cm4_build/blinky_cm4_crc.elf --output C:/ModusWorkspace/mtb-example-psoc6-dfu-basic/blinky_cm4/blinky_cm4_build/blinky_cm4_crc.cyacd2 ;
-	   ```
-
-**Figure 2. Keil Post build steps**
-
-![](images/keil-post-build.png)
-
-### Instructions for using IAR
-1. To export to IAR, IAR Compiler must be installed. Please refer [ModusToolBox](https://www.cypress.com/products/modustoolbox-software-environment) User guide chapter **Export IAR EWARM** for instructions.
-   
-   **Note:** Before running `make ewarm8` command make sure that CY_COMPILER_PATH in Makefile is set to Compilers bin directory. Please refer [KBA229177](https://community.cypress.com/t5/Knowledge-Base-Articles/Managing-the-Makefile-for-ModusToolbox-v2-x-KBA229177/ta-p/250624) to manage the Makefile. 
-
-2. Generate the *.cyacd2* file in IAR EW for Arm as follows:
-
-   1. Use **Project** > **Options** > Linker > Output tab to change the Output file extension from *.out* to *.elf*. 
-   
-   2. Create a *.bat* file in the Project directory using any Text Editor(for Ex.Notepad) for post build operation to generate a *.cyacd2* file. You can write post build command in *.bat* file as follows:
-
-      *Post build command* (Syntax):
-      \<Install path of ModusToolbox>/tools_2.2/cymcuelftool-1.0/bin/cymcuelftool.exe --sign {Local Path to \<Application Name>.elf} CRC --output {Local Path to generate \<Application Name>_crc.elf} && \<Install path of ModusToolbox>/tools_2.2/cymcuelftool-1.0/bin/cymcuelftool.exe -P {Local Path to \<Application Name>_crc.elf} --output {Local Path to generate \<Application Name>_crc.cyacd2} 
-
-      Example:
-
-      *Post build command* (RUN):
-      ```
-      C:/Users/<USERNAME>/ModusToolbox/tools_2.2/cymcuelftool-1.0/bin/cymcuelftool.exe --sign C:/ModusWorkspace/mtb-example-psoc6-dfu-basic/blinky_cm4/Debug/Exe/blinky_cm4.elf CRC --output C:/ModusWorkspace/mtb-example-psoc6-dfu-basic/blinky_cm4/Debug/Exe/blinky_cm4_crc.elf && C:/Users/<USERNAME>/ModusToolbox/tools_2.2/cymcuelftool-1.0/bin/cymcuelftool.exe -P C:/ModusWorkspace/mtb-example-psoc6-dfu-basic/blinky_cm4/Debug/Exe/blinky_cm4_crc.elf --output C:/ModusWorkspace/mtb-example-psoc6-dfu-basic/blinky_cm4/Debug/Exe/blinky_cm4_crc.cyacd2
-      ```
-   
-   3. Under **Project** > **Options** > Build Actions tab, Select a path to created *.bat* file for post build operation. and Click **OK**. 
-
-**Figure 3. IAR Post build steps**
-
-![](images/iar-post-build.png)
+**NOTE:** Build the App0 and App1 projects with the same toolchain. Application transfer may fail otherwise. Check the **Build Settings** for each project.
 
 ## Debugging
 
@@ -271,31 +274,52 @@ You can debug the example to step through the code. In the IDE, use the **\<Appl
 
 **Note:** **(Only while debugging)** On the CM4 CPU, some code in `main()` may execute before the debugger halts at the beginning of `main()`. This means that some code executes twice - once before the debugger stops execution, and again after the debugger resets the program counter to the beginning of `main()`. See [KBA231071](https://community.cypress.com/docs/DOC-21143) to learn about this and for the workaround.
 
-## Design and Implementation
+## Design and implementation
 
 ### Overview
 
-This example demonstrates basic Device Firmware Upgrade (DFU) operations based on the [DFUSDK](https://github.com/cypresssemiconductorco/dfu).
+This example demonstrates basic Device Firmware Upgrade (DFU) operations based on the [DFU Middleware library](https://github.com/cypresssemiconductorco/dfu).
 
-### Bootloader Implementation
+### Bootloader implementation
 
 This bootloader sample implements an immutable bootloader with support for upgrading the application.
 
-The [DFU Host Tool](https://www.cypress.com/file/504426/download) (typically running on the host PC) sends the application (*\<APPNAME>.cyacd2*) to the device. The bootloader receives the application image in chunks and overwrites the existing application image. See Figure 4 below. If a DFU session is interrupted, the application firmware will not be in a usable state. However, the device can still run the bootloader and perform necessary actions to download and install the application in subsequent DFU sessions.
+The [DFU Host tool](https://www.cypress.com/file/504426/download) (typically running on the host PC) sends the application (*\<APPNAME>.cyacd2*) to the device. The bootloader receives the application image in chunks and overwrites the existing application image. See Figure 4 below. If a DFU session is interrupted, the application firmware will not be in a usable state. However, the device can still run the bootloader and perform necessary actions to download and install the application in subsequent DFU sessions.
 
-**Figure 4. DFU Design Overview**
+**Figure 4. DFU design overview**
 
 ![](images/dfu-overwrite.png)
 
-### DFU Interfaces
+### DFU interfaces
 
-The bootloader supports *I2C* and *UART* interfaces for communicating with the DFU host. The *COMPONENT_CUSTOM_DESIGN_MODUS* directory includes all the necessary configurations to select the supported interfaces. See Figure 5 for default configuration details. These default configurations can be changed according to the use case. However, you must ensure that the configuration of the DFU Host tool matches with that of the bootloader.
+The bootloader supports *I2C*, *UART*, and *USB_CDC* interfaces for communicating with the DFU host. The *COMPONENT_CUSTOM_DESIGN_MODUS* directory includes all the necessary configurations to select the supported interfaces. See Table below for the default configuration details. These default configurations can be changed according to the use case. However, you must ensure that the configuration of the DFU Host tool matches with that of the bootloader.
 
-**Figure 5. DFU Transport Configurations**
+**DFU transport configurations**
 
-![](images/dfu-transport-config.png)
+   |DFU Transport: I2C| Default |     |
+   | :--------------- | :------ | :-----|
+   | Mode  | Slave | Device acts as a Slave|
+   | Address | 12  | 7-bit Slave Device address |
+   | Data Rate |400 kbps| DFU supports standard Data rates from 50 kbps to 1 Mbps|
 
-### Memory Layout
+   |DFU Transport: UART| Default |  |
+   | :--------------- | :------ | :-----|
+   | Mode | Standard | Standard, SmartCard, and IrDA are supported UART Modes in SCB |  
+   | Baud Rate(bps)|115200 | Supports standard buad rates from 19200 to 115200 |
+   | Data Width| 8 bits| Standard frame |
+   | Parity| None | Standard frame |
+   | Stop bits| 1 bit | Standard frame |
+   | Bit Order| LSB First| Standard frame |
+
+   |DFU Transport: USB_CDC| Default |  |
+   | :--------------- | :------ | :-----|
+   | Endpoints Mask | 255 | |
+   | Endpoint 1 Transfer Type | Interrupt | To Initiate the Transport |
+   | Endpoint 2 Transfer Type | Bulk | To Download and Verify binary Image |
+   | Endpoints Buffer Management| Manual CPU | USB supports communication using Auto/Manual DMA|
+   | Endpoints Access Type | 8 bit| |
+ 
+### Memory layout
 
 The first 8-KB region of the flash is reserved for the CM0+ CPU. 64 KB is reserved for the bootloader followed by a 128-KB reserved region for future enhancements. Another 64 KB is allocated to the application firmware followed by the reserved region. The size of this Empty/Reserved region depends on the size of the flash available on the selected target device. See respective device datasheets for details. The last 1-KB region of the flash is reserved for bootloader metadata.
 
@@ -303,37 +327,38 @@ To change the memory layout or usage, update the respective target linker script
 
 The RAM is shared by the bootloader and the blinky applications, with a common area used by both projects. The RAM regions must be aligned to the 1-KB boundary because they contain the Interrupt Vector Table Remapped at the start.
 
-**Figure 6. DFU Memory Map**
+**Figure 5. DFU memory map**
 
 ![](images/dfu-memory-map.png)
 
-### Software Reset
+### Software reset
 
-When transferring control from one application to another, the recommended method is through a device software reset. This enables each application to initialize device hardware blocks and signal routing from a known state. It is possible to freeze the state of I/O pins so that they are maintained through a software reset. Defined portions of SRAM are also maintained through a software reset. For more information, see the device-specific Technical Reference Manual.
+When transferring control from one application to another, the recommended method is through a device software reset. This enables each application to initialize device hardware blocks and signal routing from a known state. It is possible to freeze the state of I/O pins so that they are maintained through a software reset. Defined portions of the SRAM are also maintained through a software reset. For more information, see the device-specific Technical Reference Manual.
 
-### Running the Code Example on a Single-CPU MCU
+### Running the code example on a single-CPU device
 
 This code example is designed to run both application and bootloader on the CM4 CPU. The CM0+ CPU is reserved, which runs a tiny pre-built binary that transfers control to the CM4 CPU on every power cycle. For single-CPU devices, you must modify the linker script to exclude the CM0+ binary.
 
-### Resources and Settings
+### Resources and settings
 
-**Table 1. Bootloader Resources**
+**Table 1. Bootloader resources**
 
 | Resource  |  Alias/Object     |    Purpose     |
 | :------- | :------------    | :------------ |
 | SCB (I2C) (PDL) | DFU_I2C          | I2C slave driver to communicate with the DFU host |
 | SCB (UART)(PDL) | DFU_UART          | UART driver to communicate with the DFU host |
+| USB (PDL) | DFU_USB_CDC  | USB_CDC driver to communicate with the DFU host |
 | GPIO (HAL)    | CYBSP_USER_LED         | User LED                  |
 | GPIO (HAL)    | CYBSP_USER_BTN         | User button                  |
 
-**Table 2. Application Resources**
+**Table 2. Application resources**
 
 | Resource  |  Alias/Object     |    Purpose     |
 | :------- | :------------    | :------------ |
 | GPIO (HAL)    | CYBSP_USER_LED         | User LED                  |
 | GPIO (HAL)    | CYBSP_USER_BTN         | User button                  |
 
-## Related Resources
+## Related resources
 
 | Application Notes                                            |                                                              |
 | :----------------------------------------------------------- | :----------------------------------------------------------- |
@@ -350,7 +375,7 @@ This code example is designed to run both application and bootloader on the CM4 
 | [CY8CPROTO-063-BLE](https://www.cypress.com/CY8CPROTO-063-BLE) PSoC 6 BLE Prototyping Kit | [CY8CPROTO-062-4343W](https://www.cypress.com/CY8CPROTO-062-4343W) PSoC 6 Wi-Fi BT Prototyping Kit |
 | [CY8CKIT-062S2-43012](https://www.cypress.com/CY8CKIT-062S2-43012) PSoC 62S2 Wi-Fi BT Pioneer Kit | [CY8CPROTO-062S3-4343W](https://www.cypress.com/CY8CPROTO-062S3-4343W) PSoC 62S3 Wi-Fi BT Prototyping Kit |
 | [CYW9P62S1-43438EVB-01](https://www.cypress.com/CYW9P62S1-43438EVB-01) PSoC 62S1 Wi-Fi BT Pioneer Kit | [CYW9P62S1-43012EVB-01](https://www.cypress.com/CYW9P62S1-43012EVB-01) PSoC 62S1 Wi-Fi BT Pioneer Kit |
-| [CY8CKIT-064B0S2-4343W](http://www.cypress.com/CY8CKIT-064B0S2-4343W) PSoC 64 Secure Boot Wi-Fi BT Pioneer Kit |            |
+| [CY8CKIT-064B0S2-4343W](http://www.cypress.com/CY8CKIT-064B0S2-4343W) PSoC 64 'Secure Boot' Wi-Fi BT Pioneer Kit |            |
 | **Libraries**                                                |                                                              |
 | PSoC 6 Peripheral Driver Library (PDL) and docs  | [mtb-pdl-cat1](https://github.com/cypresssemiconductorco/mtb-pdl-cat1) on GitHub |
 | Cypress Hardware Abstraction Layer (HAL) Library and docs    | [mtb-hal-cat1](https://github.com/cypresssemiconductorco/mtb-hal-cat1) on GitHub |
@@ -372,6 +397,7 @@ Document Title: *CE232504* - *PSoC 6 MCU: Basic Device Firmware Upgrade (DFU)*
 | Version | Description of Change |
 | ------- | --------------------- |
 | 1.0.0   | New code example      |
+| 1.1.0   | Updated code example to support USB_CDC|
 
 ------
 
