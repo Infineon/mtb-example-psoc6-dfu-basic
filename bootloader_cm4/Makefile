@@ -152,7 +152,7 @@ POSTBUILD=
 ################################################################################
 # Include additional configurations, source and headers.
 ################################################################################
-DFU_PATH=../../mtb_shared/dfu/latest-v4.X/config/CAT1A
+DFU_PATH=$(SEARCH_dfu)/config/CAT1A
 
 ifeq ($(TRANSPORT_OPT), I2C)
     $(info Selected I2C transport for DFU.)
