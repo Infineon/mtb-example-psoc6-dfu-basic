@@ -1,4 +1,4 @@
-# PSoC 6 MCU: basic device firmware upgrade (DFU)
+# PSoC&trade; 6 MCU: basic device firmware upgrade (DFU)
 
 This example demonstrates basic device firmware update (DFU), also known as "bootloading", with PSoC&trade; 6 MCU. This includes downloading an application from a host and installing it in device flash, and then transferring control to that application. This example bundles two applications:
 
@@ -8,36 +8,39 @@ This example demonstrates basic device firmware update (DFU), also known as "boo
 
 **Note:** This example supports only *I2C*, *UART*, and *USB_CDC* for DFU transport currently.
 
-[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMzI1MDQiLCJTcGVjIE51bWJlciI6IjAwMi0zMjUwNCIsIkRvYyBUaXRsZSI6IlBTb0MgNiBNQ1U6IGJhc2ljIGRldmljZSBmaXJtd2FyZSB1cGdyYWRlIChERlUpIiwicmlkIjoicnhodiIsIkRvYyB2ZXJzaW9uIjoiMS4yLjAiLCJEb2MgTGFuZ3VhZ2UiOiJFbmdsaXNoIiwiRG9jIERpdmlzaW9uIjoiTUNEIiwiRG9jIEJVIjoiSUNXIiwiRG9jIEZhbWlseSI6IlBTT0MifQ==)
+[View this README on GitHub.](https://github.com/cypresssemiconductorco/mtb-example-psoc6-dfu-basic)
+
+[Provide feedback on this code example.](https://cypress.co1.qualtrics.com/jfe/form/SV_1NTns53sK2yiljn?Q_EED=eyJVbmlxdWUgRG9jIElkIjoiQ0UyMzI1MDQiLCJTcGVjIE51bWJlciI6IjAwMi0zMjUwNCIsIkRvYyBUaXRsZSI6IlBTb0MmdHJhZGU7IDYgTUNVOiBiYXNpYyBkZXZpY2UgZmlybXdhcmUgdXBncmFkZSAoREZVKSIsInJpZCI6InJ4aHYiLCJEb2MgdmVyc2lvbiI6IjEuMy4wIiwiRG9jIExhbmd1YWdlIjoiRW5nbGlzaCIsIkRvYyBEaXZpc2lvbiI6Ik1DRCIsIkRvYyBCVSI6IklDVyIsIkRvYyBGYW1pbHkiOiJQU09DIn0=)
 
 ## Requirements
 
-- [ModusToolbox&trade; software](https://www.cypress.com/products/modustoolbox-software-environment) v2.2.1
+- [ModusToolbox&trade; software](https://www.cypress.com/products/modustoolbox-software-environment) v2.2.1 or later
 
-    **Note:** This code example version requires ModusToolbox software version 2.2.1 or later and is not backward compatible with v2.2 or older versions.
+    **Note:** This code example version requires ModusToolbox&trade; software version 2.2.1 or later and is not backward compatible with v2.2 or older versions.
 
-- Board Support Package (BSP) minimum required version: 2.0.0
+- Board support package (BSP) minimum required version: 2.0.0
 
-- Programming Language: C
+- Programming language: C
 
 - Associated parts: All [PSoC&trade; 6 MCU](http://www.cypress.com/PSoC6) parts
 
 ## Supported toolchains (make variable 'TOOLCHAIN')
 
 - GNU Arm® embedded compiler v9.3.1 (`GCC_ARM`) - Default value of `TOOLCHAIN`
-- Arm compiler v6.13 (`ARM`)
+- Arm&reg; compiler v6.13 (`ARM`)
 - IAR C/C++ compiler v8.42.2 (`IAR`)
 
 ## Supported kits (make variable 'TARGET')
 
-- [PSoC 6 Bluetooth LE pioneer kit](https://www.cypress.com/CY8CKIT-062-BLE) (`CY8CKIT-062-BLE`) - Default value of `TARGET`
-- [PSoC 6 Wi-Fi Bluetooth prototyping kit](https://www.cypress.com/CY8CPROTO-062-4343W) (`CY8CPROTO-062-4343W`)
-- [PSoC 6 Wi-Fi Bluetooth pioneer kit](https://www.cypress.com/CY8CKIT-062-WiFi-BT) (`CY8CKIT-062-WIFI-BT`)
-- [PSoC 6 Bluetooth LE prototyping kit](https://www.cypress.com/CY8CPROTO-063-BLE) (`CY8CPROTO-063-BLE`)
-- [PSoC 62S2 Wi-Fi Bluetooth pioneer kit](https://www.cypress.com/CY8CKIT-062S2-43012) (`CY8CKIT-062S2-43012`)
-- [PSoC 62S1 Wi-Fi Bluetooth pioneer kit](https://www.cypress.com/CYW9P62S1-43438EVB-01) (`CYW9P62S1-43438EVB-01`)
-- [PSoC 62S1 Wi-Fi Bluetooth pioneer kit](https://www.cypress.com/CYW9P62S1-43012EVB-01) (`CYW9P62S1-43012EVB-01`)
-- [PSoC 62S3 Wi-Fi Bluetooth prototyping kit](https://www.cypress.com/CY8CPROTO-062S3-4343W) (`CY8CPROTO-062S3-4343W`)
+- [PSoC&trade; 6 Bluetooth&reg; LE pioneer kit](https://www.cypress.com/CY8CKIT-062-BLE) (`CY8CKIT-062-BLE`) - Default value of `TARGET`
+- [PSoC&trade; 6 Wi-Fi Bluetooth&reg; prototyping kit](https://www.cypress.com/CY8CPROTO-062-4343W) (`CY8CPROTO-062-4343W`)
+- [PSoC&trade; 6 Wi-Fi Bluetooth&reg; pioneer kit](https://www.cypress.com/CY8CKIT-062-WiFi-BT) (`CY8CKIT-062-WIFI-BT`)
+- [PSoC&trade; 6 Bluetooth&reg; LE prototyping kit](https://www.cypress.com/CY8CPROTO-063-BLE) (`CY8CPROTO-063-BLE`)
+- [PSoC&trade; 62S2 Wi-Fi Bluetooth&reg; pioneer kit](https://www.cypress.com/CY8CKIT-062S2-43012) (`CY8CKIT-062S2-43012`)
+- [PSoC&trade; 62S1 Wi-Fi Bluetooth&reg; pioneer kit](https://www.cypress.com/CYW9P62S1-43438EVB-01) (`CYW9P62S1-43438EVB-01`)
+- [PSoC&trade; 62S1 Wi-Fi Bluetooth&reg; pioneer kit](https://www.cypress.com/CYW9P62S1-43012EVB-01) (`CYW9P62S1-43012EVB-01`)
+- [PSoC&trade; 62S3 Wi-Fi Bluetooth&reg; prototyping kit](https://www.cypress.com/CY8CPROTO-062S3-4343W) (`CY8CPROTO-062S3-4343W`)
+- [PSoC&trade; 62S4 pioneer kit](https://www.cypress.com/CY8CKIT-062S4) (`CY8CKIT-062S4`)
 
 ## Supported transports (make variable 'TRANSPORT_OPT')
 
@@ -53,12 +56,13 @@ The default transport is I2C. See the [Operation](#operation) section for instru
 | CYW9P62S1-43438EVB-01 | Yes | Yes | Yes |
 | CYW9P62S1-43012EVB-01 | Yes | Yes | Yes |
 | CY8CPROTO-062S3-4343W | Yes | Yes | Yes |
+| CY8CKIT-062S4 | Yes | Yes | Yes |
 
 ## Hardware setup
 
 This example uses the board's default configuration. See the kit user guide to ensure that the board is configured correctly.
 
-**Note:** The PSoC 6 Bluetooth LE pioneer kit (CY8CKIT-062-BLE) and the PSoC 6 Wi-Fi Bluetooth pioneer kit (CY8CKIT-062-WIFI-BT) ship with KitProg2 installed. The ModusToolbox software requires KitProg3. Before using this code example, make sure that the board is upgraded to KitProg3. The tool and instructions are available in the [Firmware Loader](https://github.com/cypresssemiconductorco/Firmware-loader) GitHub repository. If you do not upgrade, you will see an error like "unable to find CMSIS-DAP device" or "KitProg firmware is out of date".
+**Note:** The PSoC&trade; 6 Bluetooth&reg; LE pioneer kit (CY8CKIT-062-BLE) and the PSoC&trade; 6 Wi-Fi Bluetooth&reg; pioneer kit (CY8CKIT-062-WIFI-BT) ship with KitProg2 installed. The ModusToolbox&trade; software requires KitProg3. Before using this code example, make sure that the board is upgraded to KitProg3. The tool and instructions are available in the [Firmware Loader](https://github.com/cypresssemiconductorco/Firmware-loader) GitHub repository. If you do not upgrade, you will see an error like "unable to find CMSIS-DAP device" or "KitProg firmware is out of date".
 
 ## Software setup
 
@@ -70,9 +74,9 @@ This example requires no additional software or tools.
 
 Create the project and open it using one of the following:
 
-<details><summary><b>In Eclipse IDE for ModusToolbox</b></summary>
+<details><summary><b>In Eclipse IDE for ModusToolbox&trade; software</b></summary>
 
-1. Click the **New Application** link in the **Quick Panel** (or, use **File** > **New** > **ModusToolbox Application**). This launches the [Project Creator](http://www.cypress.com/ModusToolboxProjectCreator) tool.
+1. Click the **New Application** link in the **Quick Panel** (or, use **File** > **New** > **ModusToolbox Application**). This launches the [Project Creator](https://www.cypress.com/ModusToolboxProjectCreator) tool.
 
 2. Pick a kit supported by the code example from the list shown in the **Project Creator - Choose Board Support Package (BSP)** dialog.
 
@@ -86,51 +90,72 @@ Create the project and open it using one of the following:
 
 4. Optionally, change the suggested **New Application Name**.
 
-5. Enter the local path in the **Application(s) Root Path** field to indicate where the application needs to be created.
-
-   Applications that can share libraries can be placed in the same root path.
+5. The **Application(s) Root Path** defaults to the Eclipse workspace which is usually the desired location for the application. If you want to store the application in a different location, you can change the *Application(s) Root Path* value. Applications that share libraries should be in the same root path.
 
 6. Click **Create** to complete the application creation process.
 
-For more details, see the [Eclipse IDE for ModusToolbox User Guide](https://www.cypress.com/MTBEclipseIDEUserGuide) (locally available at *{ModusToolbox install directory}/ide_{version}/docs/mt_ide_user_guide.pdf*).
+For more details, see the [Eclipse IDE for ModusToolbox&trade; software user guide](https://www.cypress.com/MTBEclipseIDEUserGuide) (locally available at *{ModusToolbox&trade; software install directory}/ide_{version}/docs/mt_ide_user_guide.pdf*).
 
 </details>
 
 <details><summary><b>In command-line interface (CLI)</b></summary>
 
-ModusToolbox provides the Project Creator as both a GUI tool and a command line tool to easily create one or more ModusToolbox applications. See the "Project Creator Tools" section of the [ModusToolbox User Guide](https://www.cypress.com/ModusToolboxUserGuide) for more details.
+ModusToolbox&trade; software provides the Project Creator as both a GUI tool and a command line tool, "project-creator-cli". The CLI tool can be used to create applications from a CLI terminal or from within batch files or shell scripts. This tool is available in the *{ModusToolbox&trade; software install directory}/tools_{version}/project-creator/* directory.
 
-Alternatively, you can manually create the application using the following steps:
+Use a CLI terminal to invoke the "project-creator-cli" tool. On Windows, use the command line "modus-shell" program provided in the ModusToolbox&trade; software installation instead of a standard Windows command-line application. This shell provides access to all ModusToolbox&trade; software tools. You can access it by typing `modus-shell` in the search box in the Windows menu. In Linux and macOS, you can use any terminal application.
 
-1. Download and unzip this repository onto your local machine, or clone the repository.
+The following table lists the arguments for this tool:
 
-2. Open a CLI terminal and navigate to the application folder.
+Argument | Description | Required/optional
+---------|-------------|-----------
+`--board-id` | Defined in the `<id>` field of the [BSP](https://github.com/cypresssemiconductorco?q=bsp-manifest&type=&language=&sort=) manifest | Required
+`--app-id`   | Defined in the `<id>` field of the [CE](https://github.com/cypresssemiconductorco?q=ce-manifest&type=&language=&sort=) manifest | Required
+`--target-dir`| Specify the directory in which the application is to be created if you prefer not to use the default current working directory | Optional
+`--user-app-name`| Specify the name of the application if you prefer to have a name other than the example's default name | Optional
 
-   On Windows, use the command line "modus-shell" program provided in the ModusToolbox installation instead of a standard Windows command line application. This shell provides access to all ModusToolbox tools. You can access it by typing `modus-shell` in the search box in the Windows menu.
 
-   In Linux and macOS, you can use any terminal application.
+The following example will clone the "[Hello World](https://github.com/cypresssemiconductorco/mtb-example-psoc6-hello-world)" application with the desired name "MyHelloWorld" configured for the *CY8CKIT-062-WIFI-BT* BSP into the specified working directory, *C:/mtb_projects*:
 
-   **Note:** The cloned application contains a default BSP file (*TARGET_xxx.mtb*) in the *deps* folder. Use the [Library Manager](https://www.cypress.com/ModusToolboxLibraryManager) (`make modlibs` command) to select and download a different BSP file, if required. If the selected kit does not have the required resources or is not [supported](#supported-kits-make-variable-target), the application may not work.
+   ```
+   project-creator-cli --board-id CY8CKIT-062-WIFI-BT --app-id mtb-example-psoc6-hello-world --user-app-name MyHelloWorld --target-dir "C:/mtb_projects"
+   ```
 
-3. Import the required libraries by executing the `make getlibs` command.
-
-Various CLI tools include a `-h` option that prints help information to the terminal screen about that tool. For more details, see the [ModusToolbox User Guide](https://www.cypress.com/ModusToolboxUserGuide) (locally available at *{ModusToolbox install directory}/docs_{version}/mtb_user_guide.pdf*).
+**Note:** The project-creator-cli tool uses the `git clone` and `make getlibs` commands to fetch the repository and import the required libraries. For more details, see the "Project creator tools" section of the [ModusToolbox&trade; software user guide](https://www.cypress.com/ModusToolboxUserGuide) (locally available at *{ModusToolbox&trade; software install directory}/docs_{version}/mtb_user_guide.pdf*).
 
 </details>
 
-<details><summary><b>In Third-party IDEs</b></summary>
+<details><summary><b>In third-party IDEs</b></summary>
 
-1. Follow the instructions from the **In command-line interface (CLI)** section to create the application, and import the libraries using the `make getlibs` command.
+Use one of the following options:
 
-2. Export the application to a supported IDE using the `make <ide>` command.
+- **Use the standalone [Project Creator](https://www.cypress.com/ModusToolboxProjectCreator) tool:**
 
-   For a list of supported IDEs and more details, see the "Exporting to IDEs" section of the [ModusToolbox User Guide](https://www.cypress.com/ModusToolboxUserGuide) (locally available at *{ModusToolbox install directory}/docs_{version}/mtb_user_guide.pdf*).
+   1. Launch Project Creator from the Windows Start menu or from *{ModusToolbox&trade; software install directory}/tools_{version}/project-creator/project-creator.exe*.
 
-3. Follow the instructions displayed in the terminal to create or import the application as an IDE project.
+   2. In the initial **Choose Board Support Package** screen, select the BSP and click **Next**.
 
- **Instructions for using Keil**
+   3. In the **Select Application** screen, select the appropriate IDE from the **Target IDE** drop-down menu.
 
-   1. To export to Keil, MDK Compiler must be installed. See [ModusToolBox User Guide](https://www.cypress.com/file/512716/download) chapter **Export to Keil µVision 5** for instructions.
+   4. Click **Create** and follow the instructions printed in the bottom pane to import or open the exported project in the respective IDE.
+
+- **Use command-line interface (CLI):**
+
+   1. Follow the instructions from the **In command-line interface (CLI)** section to create the application, and import the libraries using the `make getlibs` command.
+
+   2. Export the application to a supported IDE using the `make <ide>` command.
+
+   3. Follow the instructions displayed in the terminal to create or import the application as an IDE project.
+
+For a list of supported IDEs and more details, see the "Exporting to IDEs" section of the [ModusToolbox&trade; software user guide](https://www.cypress.com/ModusToolboxUserGuide) (locally available at *{ModusToolbox&trade; software install directory}/docs_{version}/mtb_user_guide.pdf*).
+
+</details>
+
+
+
+
+   **Instructions for using Keil IDE**
+
+   1. To export to Keil IDE, MDK compiler must be installed. See [ModusToolBox&trade user guide](https://www.cypress.com/file/512716/download) chapter **Export to Keil µVision 5** for instructions.
 
       **Note:** Before running the `make uvision5` command, make sure that `CY_COMPILER_PATH` in Makefile is set to the compiler's *\bin* directory. See [KBA229177](https://community.cypress.com/t5/Knowledge-Base-Articles/Managing-the-Makefile-for-ModusToolbox-v2-x-KBA229177/ta-p/250624) to learn how to manage the Makefile.
 
@@ -149,12 +174,14 @@ Various CLI tools include a `-h` option that prints help information to the term
           Example:
 
           *Post-build command 1* (Run#1):
+
           ```
           C:/Users/<USERNAME>/ModusToolbox/tools_2.2/cymcuelftool-1.0/bin/cymcuelftool.exe --sign C:/ModusWorkspace/mtb-example-psoc6-dfu-basic/blinky_cm4/blinky_cm4_build/blinky_cm4.elf CRC --output C:/ModusWorkspace/mtb-example-psoc6-dfu-basic/blinky_cm4/blinky_cm4_build/blinky_cm4_crc.elf ;
           ```
           <br>
 
           *Post-build command 2* (Run#2):
+
           ```
           C:/Users/<USERNAME>/ModusToolbox/tools_2.2/cymcuelftool-1.0/bin/cymcuelftool.exe -P C:/ModusWorkspace/mtb-example-psoc6-dfu-basic/blinky_cm4/blinky_cm4_build/blinky_cm4_crc.elf --output C:/ModusWorkspace/mtb-example-psoc6-dfu-basic/blinky_cm4/blinky_cm4_build/blinky_cm4_crc.cyacd2 ;
           ```
@@ -163,9 +190,10 @@ Various CLI tools include a `-h` option that prints help information to the term
 
          ![](images/keil-post-build.png)
 
-**Instructions for using IAR**
 
-   1. To export to IAR, IAR compiler must be installed. See [ModusToolBox User Guide](https://www.cypress.com/file/512716/download) chapter **Export IAR EWARM** for instructions.
+   **Instructions for using IAR**
+
+   1. To export to IAR, IAR compiler must be installed. See [ModusToolBox&trade; software user guide](https://www.cypress.com/file/512716/download) chapter **Export IAR EWARM** for instructions.
 
       **Note:** Before running the `make ewarm8` command, make sure that `CY_COMPILER_PATH` in Makefile is set to the compiler's *\bin* directory. See [KBA229177](https://community.cypress.com/t5/Knowledge-Base-Articles/Managing-the-Makefile-for-ModusToolbox-v2-x-KBA229177/ta-p/250624) to learn how to manage the Makefile.
 
@@ -197,20 +225,23 @@ Various CLI tools include a `-h` option that prints help information to the term
 
 </details>
 
+
 ## Operation
 
 1. Connect the board to your PC using the provided USB cable through the KitProg3 USB connector.
 
 2. Build and program the bootloader to the board using one of the following:
 
-   <details><summary><b>Using Eclipse IDE for ModusToolbox</b></summary>
+   **Note:** *I2C* is configured as the default DFU transport. To change the DFU transport, edit the Makefile to set `TRANSPORT_OPT?=<transport>`.
+
+   <details><summary><b>Using Eclipse IDE for ModusToolbox&trade; software</b></summary>
 
       1. Select the bootloader project in the Project Explorer.
 
       2. In the **Quick Panel**, scroll down, and click **\<Application Name> Program (KitProg3_MiniProg4)**.
-      </details>
 
-      **Note:** *I2C* is configured as the default DFU transport. To change the DFU transport, edit the Makefile to set `TRANSPORT_OPT?=<transport>`.
+   </details>
+
 
    <details><summary><b>Using CLI</b></summary>
 
@@ -223,18 +254,18 @@ Various CLI tools include a `-h` option that prints help information to the term
       ```
       make program TARGET=CY8CKIT-062-BLE TOOLCHAIN=GCC_ARM TRANSPORT_OPT=UART
       ```
-</details>
+   </details>
 
 3. After programming, press the *RESET* button on the board. The bootloader starts automatically and starts blinking the LED. Confirm that the kit LED blinks at approximately 1 Hz.
 
 4. Generate an upgradable application image using one of the following. On a successful build, an *\<APPNAME>.cyacd2* file will be generated.
 
-   <details><summary><b>Using Eclipse IDE for ModusToolbox</b></summary>
+   <details><summary><b>Using Eclipse IDE for ModusToolbox&trade; software</b></summary>
 
       1. Select the blinky project in the Project Explorer.
 
       2. In the **Quick Panel**, scroll down, and click **\<Application Name> Build (KitProg3_MiniProg4)**.
-      </details>
+   </details>
 
    <details><summary><b>Using CLI</b></summary>
 
@@ -249,11 +280,11 @@ Various CLI tools include a `-h` option that prints help information to the term
       ```
    **Note:** The application is DFU-transport-agnostic.
 
-</details>
+   </details>
 
-5. Perform device firmware upgrade using the DFU Host tool:
+5. Perform device firmware upgrade using the DFU host tool:
 
-   1. Open the [DFU Host tool](https://www.cypress.com/file/504426/download). Connect to the device using the transport configured.
+   1. Open the [DFU host tool](https://www.cypress.com/file/504426/download). Connect to the device using the transport configured.
 
    2. Select *blinky_crc.cyacd2*. By default, it will be generated in the *mtb-example-psoc6-dfu-basic/<blinky_cm4>/build/* directory on a successful build.
 
@@ -261,13 +292,14 @@ Various CLI tools include a `-h` option that prints help information to the term
 
    4. Observe the image download progress status on the progress bar, and wait for the download to complete.
 
-      **Note:** See [DFU Host Tool](https://www.cypress.com/file/504426/download) for further details on selecting a port and configuring it for communication based on the transport enabled in the bootloader.
+      **Note:** See [DFU host tool](https://www.cypress.com/file/504426/download) documentation for further details on selecting a port and configuring it for communication based on the transport enabled in the bootloader.
 
-**Figure 3. Downloading the application using the DFU Host tool**
+**Figure 3. Downloading the application using the DFU host tool**
 
 ![](images/dfu-operation.png)
 
 After a successful download, the device will boot to *blinky_cm4*. Observe the user LED blinking at 5 Hz.
+
 
 ### Switching between *bootloader* and *application*
 
@@ -275,35 +307,39 @@ Dynamic switching between the bootloader and the application is enabled with use
 
 **Note:** Build the App0 and App1 projects with the same toolchain. Application transfer may fail otherwise. Check the **Build Settings** for each project.
 
+
 ## Debugging
 
-You can debug the example to step through the code. In the IDE, use the **\<Application Name> Debug (KitProg3_MiniProg4)** configuration in the **Quick Panel**. For more details, see the "Program and Debug" section in the [Eclipse IDE for ModusToolbox User Guide](https://www.cypress.com/MTBEclipseIDEUserGuide).
+You can debug the example to step through the code. In the IDE, use the **\<Application Name> Debug (KitProg3_MiniProg4)** configuration in the **Quick Panel**. For more details, see the "Program and Debug" section in the [Eclipse IDE for ModusToolbox&trade; software user guide](https://www.cypress.com/MTBEclipseIDEUserGuide).
 
 **Note:** **(Only while debugging)** On the CM4 CPU, some code in `main()` may execute before the debugger halts at the beginning of `main()`. This means that some code executes twice - once before the debugger stops execution, and again after the debugger resets the program counter to the beginning of `main()`. See [KBA231071](https://community.cypress.com/docs/DOC-21143) to learn about this and for the workaround.
+
 
 ## Design and implementation
 
 ### Overview
 
-This example demonstrates basic Device Firmware Upgrade (DFU) operations based on the [DFU middleware library](https://github.com/cypresssemiconductorco/dfu).
+This example demonstrates basic device firmware upgrade (DFU) operations based on the [DFU middleware library](https://github.com/cypresssemiconductorco/dfu).
+
 
 ### Bootloader implementation
 
 This bootloader sample implements an immutable bootloader with support for upgrading the application.
 
-The [DFU Host tool](https://www.cypress.com/file/504426/download) (typically running on the host PC) sends the application (*\<APPNAME>.cyacd2*) to the device. The bootloader receives the application image in chunks and overwrites the existing application image. See Figure 4 below. If a DFU session is interrupted, the application firmware will not be in a usable state. However, the device can still run the bootloader and perform necessary actions to download and install the application in subsequent DFU sessions.
+The [DFU host tool](https://www.cypress.com/file/504426/download) (typically running on the host PC) sends the application (*\<APPNAME>.cyacd2*) to the device. The bootloader receives the application image in chunks and overwrites the existing application image. See Figure 4 below. If a DFU session is interrupted, the application firmware will not be in a usable state. However, the device can still run the bootloader and perform necessary actions to download and install the application in subsequent DFU sessions.
 
 **Figure 4. DFU design overview**
 
 ![](images/dfu-overwrite.png)
 
+
 ### DFU interfaces
 
-The bootloader supports *I2C*, *UART*, and *USB_CDC* interfaces for communicating with the DFU host. The *COMPONENT_CUSTOM_DESIGN_MODUS* directory includes all the necessary configurations to select the supported interfaces. See Table below for the default configuration details. These default configurations can be changed according to the use case. However, you must ensure that the configuration of the DFU Host tool matches with that of the bootloader.
+The bootloader supports *I2C*, *UART*, and *USB_CDC* interfaces for communicating with the DFU host. The *COMPONENT_CUSTOM_DESIGN_MODUS* directory includes all the necessary configurations to select the supported interfaces. See Table below for the default configuration details. These default configurations can be changed according to the use case. However, you must ensure that the configuration of the DFU host tool matches with that of the bootloader.
 
 **DFU transport configurations**
 
-   |DFU Transport: I2C| Default |Description     |
+   |DFU transport: I2C| Default |Description     |
    | :--------------- | :------ | :-----|
    | Mode  | Slave | Device acts as a slave|
    | Address | 12  | 7-bit slave device address |
@@ -311,7 +347,7 @@ The bootloader supports *I2C*, *UART*, and *USB_CDC* interfaces for communicatin
 
    <br>
 
-   |DFU Transport: UART| Default |Description  |
+   |DFU transport: UART| Default |Description  |
    | :--------------- | :------ | :-----|
    | Mode | Standard | Standard, SmartCard, and IrDA are supported UART modes in SCB |
    | Baud rate(bps)|115200 | Supports standard baud rates from 19200 to 115200 |
@@ -322,7 +358,7 @@ The bootloader supports *I2C*, *UART*, and *USB_CDC* interfaces for communicatin
 
    <br>
 
-   |DFU Transport: USB_CDC| Default |Description  |
+   |DFU transport: USB_CDC| Default |Description  |
    | :--------------- | :------ | :-----|
    | Endpoints mask | 255 | |
    | Endpoint 1 transfer type | Interrupt | To initiate the transport |
@@ -344,19 +380,22 @@ The RAM is shared by the bootloader and the blinky applications, with a common a
 
 ![](images/dfu-memory-map.png)
 
+
 ### Software reset
 
 When transferring control from one application to another, the recommended method is through a device software reset. This enables each application to initialize device hardware blocks and signal routing from a known state. It is possible to freeze the state of I/O pins so that they are maintained through a software reset. Defined portions of the SRAM are also maintained through a software reset. For more information, see the device-specific Technical Reference Manual.
+
 
 ### Running the code example on a single-CPU device
 
 This code example is designed to run both application and bootloader on the CM4 CPU. The CM0+ CPU is reserved, which runs a tiny pre-built binary that transfers control to the CM4 CPU on every power cycle. For single-CPU devices, you must modify the linker script to exclude the CM0+ binary.
 
+
 ### Resources and settings
 
 **Table 1. Bootloader resources**
 
-| Resource  |  Alias/Object     |    Purpose     |
+| Resource  |  Alias/object     |    Purpose     |
 | :------- | :------------    | :------------ |
 | SCB (I2C) (PDL) | DFU_I2C          | I2C slave driver to communicate with the DFU host |
 | SCB (UART)(PDL) | DFU_UART          | UART driver to communicate with the DFU host |
@@ -368,7 +407,7 @@ This code example is designed to run both application and bootloader on the CM4 
 
 **Table 2. Application resources**
 
-| Resource  |  Alias/Object     |    Purpose     |
+| Resource  |  Alias/object     |    Purpose     |
 | :------- | :------------    | :------------ |
 | GPIO (HAL)    | CYBSP_USER_LED         | User LED                  |
 | GPIO (HAL)    | CYBSP_USER_BTN         | User button                  |
@@ -379,44 +418,39 @@ This code example is designed to run both application and bootloader on the CM4 
 
 | Application notes                                            |                                                              |
 | :----------------------------------------------------------- | :----------------------------------------------------------- |
-| [AN228571](https://www.cypress.com/AN228571) – Getting started with PSoC 6 MCU on ModusToolbox | Describes PSoC 6 MCU devices and how to build your first application with ModusToolbox |
-| [AN221774](https://www.cypress.com/AN221774) – Getting started with PSoC 6 MCU on PSoC Creator | Describes PSoC 6 MCU devices and how to build your first application with PSoC Creator |
-| [AN210781](https://www.cypress.com/AN210781) – Getting started with PSoC 6 MCU with Bluetooth Low Energy connectivity on PSoC Creator | Describes PSoC 6 MCU with Bluetooth LE connectivity devices and how to build your first application with PSoC Creator |
-| [AN215656](https://www.cypress.com/AN215656) – PSoC 6 MCU: Dual-CPU
-system design | Describes the dual-CPU architecture in PSoC 6 MCU, and shows how to build a simple dual-CPU design |
+| [AN228571](https://www.cypress.com/AN228571) – Getting started with PSoC&trade; 6 MCU on ModusToolbox&trade; software | Describes PSoC&trade; 6 MCU devices and how to build your first application with ModusToolbox&trade; software |
+| [AN221774](https://www.cypress.com/AN221774) – Getting started with PSoC&trade; 6 MCU on PSoC&trade; Creator | Describes PSoC&trade; 6 MCU devices and how to build your first application with PSoC&trade; Creator |
+| [AN210781](https://www.cypress.com/AN210781) – Getting started with PSoC&trade; 6 MCU with Bluetooth&reg; Low Energy connectivity on PSoC&trade; Creator | Describes PSoC&trade; 6 MCU with Bluetooth&reg; LE connectivity devices and how to build your first application with PSoC&trade; Creator |
+| [AN215656](https://www.cypress.com/AN215656) – PSoC&trade; 6 MCU: Dual-CPU system design | Describes the dual-CPU architecture in PSoC&trade; 6 MCU, and shows how to build a simple dual-CPU design |
 | **Code examples**                                            |                                                              |
-| [Using ModusToolbox](https://github.com/cypresssemiconductorco/Code-Examples-for-ModusToolbox-Software) | [Using PSoC Creator](https://www.cypress.com/documentation/code-examples/psoc-6-mcu-code-examples) |
-| **Device documentation**                                     |                                                              |
-| [PSoC 6 MCU datasheets](https://www.cypress.com/search/all?f[0]=meta_type%3Atechnical_documents&f[1]=resource_meta_type%3A575&f[2]=field_related_products%3A114026) | [PSoC 6 technical reference manuals](https://www.cypress.com/search/all/PSoC%206%20Technical%20Reference%20Manual?f[0]=meta_type%3Atechnical_documents&f[1]=resource_meta_type%3A583) |
-| **Development kits**                                         | Buy at www.cypress.com                                       |
-| [CY8CKIT-062-BLE](https://www.cypress.com/CY8CKIT-062-BLE) PSoC 6 Bluetooth LE pioneer kit | [CY8CKIT-062-WiFi-BT](https://www.cypress.com/CY8CKIT-062-WiFi-BT) PSoC 6 Wi-Fi Bluetooth pioneer kit |
-| [CY8CPROTO-063-BLE](https://www.cypress.com/CY8CPROTO-063-BLE) PSoC 6 Bluetooth LE prototyping kit | [CY8CPROTO-062-4343W](https://www.cypress.com/CY8CPROTO-062-4343W) PSoC 6 Wi-Fi Bluetooth prototyping kit |
-| [CY8CKIT-062S2-43012](https://www.cypress.com/CY8CKIT-062S2-43012) PSoC 62S2 Wi-Fi Bluetooth pioneer kit | [CY8CPROTO-062S3-4343W](https://www.cypress.com/CY8CPROTO-062S3-4343W) PSoC 62S3 Wi-Fi Bluetooth prototyping kit |
-| [CYW9P62S1-43438EVB-01](https://www.cypress.com/CYW9P62S1-43438EVB-01) PSoC 62S1 Wi-Fi Bluetooth pioneer kit | [CYW9P62S1-43012EVB-01](https://www.cypress.com/CYW9P62S1-43012EVB-01) PSoC 62S1 Wi-Fi Bluetooth pioneer kit |
-| [CY8CKIT-064B0S2-4343W](http://www.cypress.com/CY8CKIT-064B0S2-4343W) PSoC 64 "Secure Boot" Wi-Fi Bluetooth pioneer kit |            |
+| [Using ModusToolbox&trade; software](https://github.com/cypresssemiconductorco/Code-Examples-for-ModusToolbox-Software) |  |
+| **Device Documentation**                                     |                                                              |
+| [PSoC&trade; 6 MCU datasheets](https://www.cypress.com/search/all?f[0]=meta_type%3Atechnical_documents&f[1]=resource_meta_type%3A575&f[2]=field_related_products%3A114026) | [PSoC&trade; 6 technical reference manuals](https://www.cypress.com/search/all/PSoC%206%20Technical%20Reference%20Manual?f[0]=meta_type%3Atechnical_documents&f[1]=resource_meta_type%3A583) |
+| **Development kits**                                         |Visit www.cypress.com/microcontrollers-mcus-kits and use the options in the **Select your kit** section to filter kits by *Product family* or *Features*.                                       |
 | **Libraries**                                                |                                                              |
-| PSoC 6 peripheral driver library (PDL) and docs  | [mtb-pdl-cat1](https://github.com/cypresssemiconductorco/mtb-pdl-cat1) on GitHub |
-| Cypress hardware abstraction layer (HAL) Library and docs    | [mtb-hal-cat1](https://github.com/cypresssemiconductorco/mtb-hal-cat1) on GitHub |
+| PSoC&trade; 6 peripheral driver library (PDL) and docs  | [mtb-pdl-cat1](https://github.com/cypresssemiconductorco/mtb-pdl-cat1) on GitHub |
+| Hardware abstraction layer (HAL) Library and docs    | [mtb-hal-cat1](https://github.com/cypresssemiconductorco/mtb-hal-cat1) on GitHub |
 | **Middleware**                                               |                                                              |
-| Links to all PSoC 6 MCU middleware                           | [psoc6-middleware](https://github.com/cypresssemiconductorco/psoc6-middleware) on GitHub |
+| Links to all PSoC&trade; 6 MCU middleware                           | [psoc6-middleware](https://github.com/cypresssemiconductorco/psoc6-middleware) on GitHub |
 | **Tools**                                                    |                                                              |
-| [Eclipse IDE for ModusToolbox](https://www.cypress.com/modustoolbox) | The cross-platform, Eclipse-based IDE for IoT designers that supports application configuration and development targeting converged MCU and wireless systems. |
+| [Eclipse IDE for ModusToolbox&trade; software](https://www.cypress.com/modustoolbox) | ModusToolbox&trade; software is a collection of easy-to-use software and tools enabling rapid development with Infineon MCUs, covering applications from embedded sense and control to wireless and cloud-connected systems using AIROC&trade; Wi-Fi and Bluetooth® connectivity devices. |
 
 ## Other resources
 
 Cypress provides a wealth of data at www.cypress.com to help you select the right device, and quickly and effectively integrate it into your design.
 
-For PSoC 6 MCU devices, see [How to design with PSoC 6 MCU - KBA223067](https://community.cypress.com/docs/DOC-14644) in the Cypress community.
+For PSoC&trade; 6 MCU devices, see [How to design with PSoC&trade; 6 MCU - KBA223067](https://community.cypress.com/docs/DOC-14644) in the Cypress community.
 
 ## Document history
 
-Document Title: *CE232504* - *PSoC 6 MCU: basic device firmware upgrade (DFU)*
+Document Title: *CE232504* - *PSoC&trade; 6 MCU: basic device firmware upgrade (DFU)*
 
 | Version | Description of Change |
 | ------- | --------------------- |
 | 1.0.0   | New code example      |
-| 1.1.0   | Updated code example to support USB_CDC|
+| 1.1.0   | Updated code example to support USB_CDC |
 | 1.2.0   | Updated DFU_PATH in Makefile|
+| 1.3.0   | Added support for 256KB CY8CKIT-062S4 kit |
 ------
 
 All other trademarks or registered trademarks referenced herein are the property of their respective owners.
