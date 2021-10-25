@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Design version="12" device_library_hint_path="../../../../mtb_shared/mtb-pdl-cat1/latest-v2.X/devicesupport.xml" xmlns="http://cypress.com/xsd/cydesignfile_v3">
-    <ToolInfo version="2.2.1.3335"/>
+    <ToolInfo version="2.3.1.4663"/>
     <Devices>
         <Device mpn="CYBLE-416045-02">
             <BlockConfig>
@@ -149,7 +149,6 @@
                         <Param id="startOnReset" value="true"/>
                     </Personality>
                 </Block>
-                <Block location="scb[3]"/>
                 <Block location="scb[5]">
                     <Alias value="DFU_UART"/>
                     <Personality template="mxs40uart" version="1.0">
