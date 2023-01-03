@@ -3,7 +3,7 @@
 # \version 1.0
 #
 # \brief
-# Makefile for configuring the Cortex-M4 core project
+# Makefile for configuring the Cortex-M0+ bootloader project
 #
 ################################################################################
 # \copyright
@@ -29,16 +29,18 @@ include ../common.mk
 # Basic Configuration
 ################################################################################
 MTB_TYPE=PROJECT
-
 # Name of application (used to derive name of final linked file).
 #
 # If APPNAME is edited, ensure to update or regenerate launch
 # configurations for your IDE.
-APPNAME=blinky_cm4
+APPNAME=bootloader_cm0p
 
 # If set to "true" or "1", display full command-lines when building.
 VERBOSE=
 
+# Build location.
+CY_BUILD_LOCATION=./build/$(TRANSPORT_OPT)
+CY_IGNORE=./build
 
 ################################################################################
 # Advanced Configuration
@@ -57,11 +59,11 @@ VERBOSE=
 COMPONENTS=
 
 # Like COMPONENTS, but disable optional code that was enabled by default.
-DISABLE_COMPONENTS+=CM0P_SLEEP CM0P_SECURE CM0P_CRYPTO CM0P_BLESS
+DISABLE_COMPONENTS+=CM0P_SECURE CM0P_CRYPTO CM0P_BLESS
 
-# Set this application to run at the CM4
-CORE=CM4
-CORE_NAME=CM4_0
+# Set this application to run at the CM0+
+CORE=CM0P
+CORE_NAME=CM0P_0
 
 # By default the build system automatically looks in the Makefile's directory
 # tree for source code and builds it. The SOURCES variable can be used to
@@ -74,8 +76,16 @@ SOURCES=
 INCLUDES=
 
 # Add additional defines to the build process (without a leading -D).
-# Define appID for blinky application
-DEFINES=CY_APP_ID=1
+# Define appID for bootloader application
+DEFINES+=CY_APP_ID=0
+
+# Defining the address for ram common region
+RAM_COMMON_START=0x08000000
+RAM_COMMON_LENGTH=0x0400
+
+# adding the define to use the symbols in the sources
+DEFINES+=RAM_COMMON_START=$(RAM_COMMON_START) \
+RAM_COMMON_LENGTH=$(RAM_COMMON_LENGTH)
 
 # Select softfp or hardfp floating point. Default is softfp.
 VFP_SELECT=
@@ -99,21 +109,43 @@ CXXFLAGS=
 ASFLAGS=
 
 # Additional / custom linker flags.
-LDFLAGS=
+ifeq (GCC_ARM, $(TOOLCHAIN))
+LDFLAGS+=-Wl,--defsym=RAM_COMMON_ORIGIN=$(RAM_COMMON_START),--defsym=RAM_COMMON_SIZE=$(RAM_COMMON_LENGTH)
+endif
 
 # Additional / custom libraries to link in to the application.
 LDLIBS=
 
 # Path to the linker script to use (if empty, use the default linker script).
-LINKER_SCRIPT=$(MTB_TOOLS__TARGET_DIR)/COMPONENT_$(MTB_RECIPE__CORE)/TOOLCHAIN_$(TOOLCHAIN)/dfu_cm4_app1.$(MTB_RECIPE__SUFFIX_LS)
+LINKER_SCRIPT=$(MTB_TOOLS__TARGET_DIR)/COMPONENT_$(MTB_RECIPE__CORE)/TOOLCHAIN_$(TOOLCHAIN)/dfu_cm0p_app0.$(MTB_RECIPE__SUFFIX_LS)
 
 # Custom pre-build commands to run.
 PREBUILD=
 
 # Custom post-build commands to run.
-POSTBUILD+=\
-            $(CY_TOOL_cymcuelftool_EXE_ABS) --sign $(MTB_TOOLS__OUTPUT_CONFIG_DIR)/$(APPNAME).elf CRC --output $(MTB_TOOLS__OUTPUT_CONFIG_DIR)/$(APPNAME)_crc.elf && \
-            $(CY_TOOL_cymcuelftool_EXE_ABS) -P $(MTB_TOOLS__OUTPUT_CONFIG_DIR)/$(APPNAME)_crc.elf --output $(MTB_TOOLS__OUTPUT_CONFIG_DIR)/$(APPNAME)_crc.cyacd2
+POSTBUILD=
+
+################################################################################
+# Include additional configurations, source and headers.
+################################################################################
+#DFU_PATH=$(SEARCH_dfu)/config/CAT1A
+
+ifeq ($(TRANSPORT_OPT), I2C)
+    $(info Selected I2C transport for DFU.)
+else ifeq ($(TRANSPORT_OPT), UART)
+    $(info Selected UART transport for DFU.)
+else ifeq ($(TRANSPORT_OPT), USB_CDC)
+    $(info Selected USB_CDC transport for DFU.)    
+else
+    $(error Unknown DFU transport selected !.)
+endif
+
+# Transport opt should be in lowercase to pick the correct files for the build. 
+TRANSPORT_OPT_LOWER_CASE=$(shell echo $(TRANSPORT_OPT) | tr A-Z a-z)
+
+# Add transport sources and headers.
+SOURCES+=../transport/transport_$(TRANSPORT_OPT_LOWER_CASE).c
+INCLUDES+=../transport
 
 ################################################################################
 # Paths

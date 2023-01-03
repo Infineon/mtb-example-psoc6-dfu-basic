@@ -1,0 +1,13 @@
+# Documentation
+images
+
+# Exports, Project settings
+.mtbLaunchConfigs
+.settings
+.vscode
+
+# BSP templates
+templates
+
+# DFU files
+transport

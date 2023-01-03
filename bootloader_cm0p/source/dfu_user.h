@@ -1,12 +1,15 @@
-/***************************************************************************//**
-* \file dfu_user.h
-* \version 4.10
+/******************************************************************************
+* File Name:   dfu_user.h
 *
+* Description:
 * This file provides declarations that can be modified by the user but
 * are used by the DFU SDK.
 *
-********************************************************************************
-* Copyright 2021-2023, Cypress Semiconductor Corporation (an Infineon company) or
+* Related Document: See README.md
+*
+*
+*******************************************************************************
+* Copyright 2022-2023, Cypress Semiconductor Corporation (an Infineon company) or
 * an affiliate of Cypress Semiconductor Corporation.  All rights reserved.
 *
 * This software, including source code, documentation and related
