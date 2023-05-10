@@ -27,7 +27,7 @@ MTB_TYPE=PROJECT
 
 # Default DFU transport set to I2C.
 #
-# Supported options are I2C, UART and USB_CDC.
+# Supported options are I2C, SPI, UART and USB_CDC.
 #
 # Select transport here, as required.
 TRANSPORT_OPT?=I2C

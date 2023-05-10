@@ -43,7 +43,7 @@ MEMORY
      * Note that 2 KB of RAM (at the end of the SRAM) are reserved for system use.
      * Using this memory region for other purposes will lead to unexpected behavior.
      */
-    ram_common        (rwx) : ORIGIN = 0x08000000, LENGTH = 0x0400
+    ram_common        (rwx) : ORIGIN = 0x08000000, LENGTH = 0x400
 
     /* Note: the ram_appX_core1 regions has to be 0x400 aligned
      * as they contain Interrupt Vector Table Remapped at the start.
@@ -370,7 +370,7 @@ SECTIONS
     } > ram_common
 
     /* The last byte of the section is used for AppId to be shared between all the applications */
-    .cy_boot_noinit.appId ORIGIN(ram_common) + LENGTH(ram_common) - 1 (NOLOAD) :
+    .cy_boot_noinit.appId ORIGIN(ram_common) (NOLOAD) :
     {
         KEEP(*(.cy_boot_noinit.appId));
     } > ram_common    

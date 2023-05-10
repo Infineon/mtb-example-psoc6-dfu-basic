@@ -370,7 +370,7 @@ SECTIONS
     } > ram_common
 
     /* The last byte of the section is used for AppId to be shared between all the applications */
-    .cy_boot_noinit.appId ORIGIN(ram_common) + LENGTH(ram_common) - 1 (NOLOAD) :
+    .cy_boot_noinit.appId ORIGIN(ram_common) (NOLOAD):
     {
         KEEP(*(.cy_boot_noinit.appId));
     } > ram_common    

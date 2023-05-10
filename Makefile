@@ -31,7 +31,7 @@ MTB_TYPE=APPLICATION
 
 MTB_PROJECTS=bootloader_cm0p blinky_cm4
 
-MERGE=bootloader_cm0p blinky_cm4
+MERGE=bootloader_cm0p
 
 include common_app.mk
 

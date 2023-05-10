@@ -24,6 +24,7 @@ SEARCH_DIR(.)
 GROUP(-lgcc -lc -lnosys)
 ENTRY(Reset_Handler)
 
+/* The size of the stack section at the end of CM0+ SRAM */
 STACK_SIZE = 0x1000;
 
 /* Force symbol to be entered in the output file as an undefined symbol. Doing
@@ -370,7 +371,7 @@ SECTIONS
     } > ram_common
 
     /* The last byte of the section is used for AppId to be shared between all the applications */
-    .cy_boot_noinit.appId ORIGIN(ram_common) + LENGTH(ram_common) - 1 (NOLOAD) :
+    .cy_boot_noinit.appId ORIGIN(ram_common) (NOLOAD) :
     {
         KEEP(*(.cy_boot_noinit.appId));
     } > ram_common    

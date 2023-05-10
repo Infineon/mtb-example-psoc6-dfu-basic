@@ -78,7 +78,7 @@ cy_stc_dfu_params_t dfu_params;
 #define BOOT_LOADER_APPID                          (0u)
 
 /* Memory pointer to schedule the next application after reset */
-const uint8_t * const appID= (const uint8_t *)(RAM_COMMON_START+RAM_COMMON_LENGTH-1);
+const uint8_t * const appID= (const uint8_t *)(RAM_COMMON_START);
 
 /*******************************************************************************
 * Function Prototypes
@@ -193,7 +193,6 @@ int main(void)
         if (CY_SYS_CM4_STATUS_ENABLED == Cy_SysGetCM4Status()) {
 
             Cy_SysDisableCM4();
-
         }
 
     #endif
@@ -600,7 +599,7 @@ static void EnableCM4(void)
 *
 * This function is used in an App0 firmware image in Reset_Handler() only.
 * Checks if switching to the other application is scheduled with
-* \ref Cy_DFU_ExecuteApp(). \n
+* ref Cy_DFU_ExecuteApp().
 * If the switch is scheduled, then it validates the application and transfers
 * control to it.
 *
@@ -636,4 +635,5 @@ static void EnableCM4(void)
         }
     }
 }
+
 /* [] END OF FILE */

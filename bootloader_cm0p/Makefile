@@ -135,7 +135,9 @@ ifeq ($(TRANSPORT_OPT), I2C)
 else ifeq ($(TRANSPORT_OPT), UART)
     $(info Selected UART transport for DFU.)
 else ifeq ($(TRANSPORT_OPT), USB_CDC)
-    $(info Selected USB_CDC transport for DFU.)    
+    $(info Selected USB_CDC transport for DFU.)
+else ifeq ($(TRANSPORT_OPT), SPI)
+    $(info Selected SPI transport for DFU.)    
 else
     $(error Unknown DFU transport selected !.)
 endif
