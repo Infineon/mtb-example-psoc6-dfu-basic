@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration app="BACKEND" formatVersion="13" lastSavedWith="Configurator Backend" lastSavedWithVersion="3.0.0" toolsPackage="ModusToolbox 3.0.0" xmlns="http://cypress.com/xsd/cydesignfile_v4">
+<Configuration app="BACKEND" formatVersion="13" lastSavedWith="Configurator Backend" lastSavedWithVersion="3.10.0" toolsPackage="ModusToolbox 3.1.0" xmlns="http://cypress.com/xsd/cydesignfile_v4">
     <Devices>
         <Device mpn="CY8C6244LQI-S4D92">
             <BlockConfig>
@@ -80,33 +80,9 @@
                 </Block>
                 <Block location="ioss[0].port[0].pin[2]">
                     <Alias value="CYBSP_D0"/>
-                    <Personality template="pin" version="3.0">
-                        <Param id="DriveModes" value="CY_GPIO_DM_OD_DRIVESLOW"/>
-                        <Param id="initialState" value="1"/>
-                        <Param id="nonSec" value="1"/>
-                        <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
-                        <Param id="isrTrigger" value="CY_GPIO_INTR_DISABLE"/>
-                        <Param id="slewRate" value="CY_GPIO_SLEW_FAST"/>
-                        <Param id="driveStrength" value="CY_GPIO_DRIVE_1_2"/>
-                        <Param id="sioOutputBuffer" value="true"/>
-                        <Param id="pullUpRes" value="CY_GPIO_PULLUP_RES_DISABLE"/>
-                        <Param id="inFlash" value="true"/>
-                    </Personality>
                 </Block>
                 <Block location="ioss[0].port[0].pin[3]">
                     <Alias value="CYBSP_D1"/>
-                    <Personality template="pin" version="3.0">
-                        <Param id="DriveModes" value="CY_GPIO_DM_OD_DRIVESLOW"/>
-                        <Param id="initialState" value="1"/>
-                        <Param id="nonSec" value="1"/>
-                        <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
-                        <Param id="isrTrigger" value="CY_GPIO_INTR_DISABLE"/>
-                        <Param id="slewRate" value="CY_GPIO_SLEW_FAST"/>
-                        <Param id="driveStrength" value="CY_GPIO_DRIVE_1_2"/>
-                        <Param id="sioOutputBuffer" value="true"/>
-                        <Param id="pullUpRes" value="CY_GPIO_PULLUP_RES_DISABLE"/>
-                        <Param id="inFlash" value="true"/>
-                    </Personality>
                 </Block>
                 <Block location="ioss[0].port[0].pin[4]">
                     <Alias value="CYBSP_SW3"/>
@@ -258,33 +234,9 @@
                 </Block>
                 <Block location="ioss[0].port[5].pin[0]">
                     <Alias value="CYBSP_D2"/>
-                    <Personality template="pin" version="3.0">
-                        <Param id="DriveModes" value="CY_GPIO_DM_OD_DRIVESLOW"/>
-                        <Param id="initialState" value="1"/>
-                        <Param id="nonSec" value="1"/>
-                        <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
-                        <Param id="isrTrigger" value="CY_GPIO_INTR_DISABLE"/>
-                        <Param id="slewRate" value="CY_GPIO_SLEW_FAST"/>
-                        <Param id="driveStrength" value="CY_GPIO_DRIVE_1_2"/>
-                        <Param id="sioOutputBuffer" value="true"/>
-                        <Param id="pullUpRes" value="CY_GPIO_PULLUP_RES_DISABLE"/>
-                        <Param id="inFlash" value="true"/>
-                    </Personality>
                 </Block>
                 <Block location="ioss[0].port[5].pin[1]">
                     <Alias value="CYBSP_D3"/>
-                    <Personality template="pin" version="3.0">
-                        <Param id="DriveModes" value="CY_GPIO_DM_OD_DRIVESLOW"/>
-                        <Param id="initialState" value="1"/>
-                        <Param id="nonSec" value="1"/>
-                        <Param id="vtrip" value="CY_GPIO_VTRIP_CMOS"/>
-                        <Param id="isrTrigger" value="CY_GPIO_INTR_DISABLE"/>
-                        <Param id="slewRate" value="CY_GPIO_SLEW_FAST"/>
-                        <Param id="driveStrength" value="CY_GPIO_DRIVE_1_2"/>
-                        <Param id="sioOutputBuffer" value="true"/>
-                        <Param id="pullUpRes" value="CY_GPIO_PULLUP_RES_DISABLE"/>
-                        <Param id="inFlash" value="true"/>
-                    </Personality>
                 </Block>
                 <Block location="ioss[0].port[5].pin[6]">
                     <Alias value="CYBSP_D4"/>
@@ -504,7 +456,7 @@
                 </Block>
                 <Block location="peri[0].div_16[0]">
                     <Personality template="pclk" version="3.0">
-                        <Param id="intDivider" value="1000"/>
+                        <Param id="intDivider" value="480"/>
                         <Param id="fracDivider" value="0"/>
                         <Param id="startOnReset" value="true"/>
                     </Personality>
@@ -520,14 +472,14 @@
                 </Block>
                 <Block location="peri[0].div_8[1]">
                     <Personality template="pclk" version="3.0">
-                        <Param id="intDivider" value="8"/>
+                        <Param id="intDivider" value="4"/>
                         <Param id="fracDivider" value="0"/>
                         <Param id="startOnReset" value="true"/>
                     </Personality>
                 </Block>
                 <Block location="peri[0].div_8[2]">
                     <Personality template="pclk" version="3.0">
-                        <Param id="intDivider" value="109"/>
+                        <Param id="intDivider" value="52"/>
                         <Param id="fracDivider" value="0"/>
                         <Param id="startOnReset" value="true"/>
                     </Personality>
@@ -625,11 +577,12 @@
                     <Personality template="fll" version="4.0">
                         <Param id="configuration" value="auto"/>
                         <Param id="desiredFrequency" value="100.000"/>
+                        <Param id="enableOutputDivider" value="false"/>
                     </Personality>
                 </Block>
                 <Block location="srss[0].clock[0].hfclk[0]">
                     <Personality template="hfclk" version="3.0">
-                        <Param id="sourceClockNumber" value="0"/>
+                        <Param id="sourceClockNumber" value="1"/>
                         <Param id="divider" value="1"/>
                     </Personality>
                 </Block>
@@ -731,27 +684,8 @@
                     </Personality>
                 </Block>
                 <Block location="usb[0]">
-                    <Alias value="DFU_USB_CDC"/>
-                    <Personality template="mxs40usbfsdevice" version="1.1">
-                        <Param id="epMask" value="255"/>
-                        <Param id="mngMode" value="CY_USBFS_DEV_DRV_EP_MANAGEMENT_CPU"/>
-                        <Param id="bufSize" value="512"/>
-                        <Param id="epAccess" value="CY_USBFS_DEV_DRV_USE_8_BITS_DR"/>
-                        <Param id="enableLpm" value="false"/>
-                        <Param id="lpmIntr" value="0x0U"/>
-                        <Param id="ArbIntr" value="0x0U"/>
-                        <Param id="ep0CntrIntr" value="0x2U"/>
-                        <Param id="busResetIntr" value="0x2U"/>
-                        <Param id="sofIntr" value="0x1U"/>
-                        <Param id="ep0Intr" value="0x1U"/>
-                        <Param id="ep1Intr" value="0x1U"/>
-                        <Param id="ep2Intr" value="0x1U"/>
-                        <Param id="ep3Intr" value="0x1U"/>
-                        <Param id="ep4Intr" value="0x1U"/>
-                        <Param id="ep5Intr" value="0x1U"/>
-                        <Param id="ep6Intr" value="0x1U"/>
-                        <Param id="ep7Intr" value="0x1U"/>
-                        <Param id="inFlash" value="true"/>
+                    <Personality template="mxs40emusb" version="1.0">
+                        <Param id="mode" value="Device"/>
                     </Personality>
                 </Block>
             </BlockConfig>

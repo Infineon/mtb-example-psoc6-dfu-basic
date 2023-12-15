@@ -1,6 +1,6 @@
 /***************************************************************************//**
 * \file transport_spi.h
-* \version 4.20
+* \version 5.0
 *
 * This file provides constants and parameter values of the DFU
 * communication APIs for the SCB Component.
@@ -83,7 +83,7 @@ extern "C" {
 
 extern bool SPI_initVar;
 
-    
+
 /***************************************
 *        Function Prototypes
 ***************************************/

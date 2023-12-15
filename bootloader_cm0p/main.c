@@ -98,6 +98,23 @@ static void EnableCM4(void);
 ********************************************************************************/
 volatile static bool is_user_event_detected = false;
 
+#ifdef COMPONENT_DFU_I2C_PDL
+    cy_en_dfu_transport_t transport_interface = CY_DFU_I2C;
+#endif /* COMPONENT_DFU_I2C_PDL */
+
+#ifdef COMPONENT_DFU_UART_PDL
+    cy_en_dfu_transport_t transport_interface = CY_DFU_UART;
+#endif /* COMPONENT_DFU_UART_PDL */
+
+#ifdef COMPONENT_DFU_SPI_PDL
+    cy_en_dfu_transport_t transport_interface = CY_DFU_SPI;
+#endif  /* COMPONENT_DFU_SPI_PDL*/
+
+#ifdef COMPONENT_DFU_EMUSB_CDC
+    cy_en_dfu_transport_t transport_interface = CY_DFU_USB_CDC;
+#endif  /* COMPONENT_DFU_EMUSB_CDC */
+
+
 /*******************************************************************************
 * Function Name: main
 ********************************************************************************
@@ -198,7 +215,7 @@ int main(void)
     #endif
 
     /* Initialize DFU communication. */
-    Cy_DFU_TransportStart();
+    Cy_DFU_TransportStart(transport_interface);
 
     /* Keep the compiler happy. */
     (void)result;

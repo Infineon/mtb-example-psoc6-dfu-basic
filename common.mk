@@ -27,7 +27,7 @@ MTB_TYPE=PROJECT
 
 # Default DFU transport set to I2C.
 #
-# Supported options are I2C, SPI, UART and USB_CDC.
+# Supported options are I2C, SPI, UART and EMUSB_CDC.
 #
 # Select transport here, as required.
 TRANSPORT_OPT?=I2C
@@ -46,7 +46,7 @@ TARGET=CY8CPROTO-062-4343W
 # ARM     -- ARM Compiler (must be installed separately)
 # IAR     -- IAR Compiler (must be installed separately)
 #
-# See also: CY_COMPILER_PATH below
+# See also: CY_COMPILER_GCC_ARM_DIR in common_app.mk
 TOOLCHAIN=GCC_ARM
 
 # Default build configuration. Options include:

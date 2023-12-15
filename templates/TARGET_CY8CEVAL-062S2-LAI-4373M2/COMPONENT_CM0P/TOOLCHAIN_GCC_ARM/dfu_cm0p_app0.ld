@@ -2,15 +2,23 @@
 * \file dfu_cm0p_app0.ld
 * \version 4.10
 *
-* The linker file for the GNU C compiler.
+* Linker file for the GNU C compiler.
+*
 * Used for the DFU SDK application 0 firmware project. Contains sections for 
 * the CM0P image that starts CM0P application 0.
 *
-* \note
-* This linker file is generic and handles common use cases. Your project may not 
-* use each section defined in the linker file and then you may see warnings 
-* during the build process. Simply comment out or remove the relevant code
-* in the linker file.
+* The main purpose of the linker script is to describe how the sections in the
+* input files should be mapped into the output file, and to control the memory
+* layout of the output file.
+*
+* \note The entry point location is fixed and starts at 0x10000000. The valid
+* application image should be placed there.
+*
+* \note The linker files included with the PDL template projects must be generic
+* and handle all common use cases. Your project may not use every section
+* defined in the linker files. In that case you may see warnings during the
+* build process. In your project, you can simply comment out or remove the
+* relevant code in the linker file.
 *
 ********************************************************************************
 * Copyright 2022-2023, Cypress Semiconductor Corporation (an Infineon company) or
@@ -22,6 +30,7 @@ SEARCH_DIR(.)
 GROUP(-lgcc -lc -lnosys)
 ENTRY(Reset_Handler)
 
+/* The size of the stack section at the end of CM0+ SRAM */
 STACK_SIZE = 0x1000;
 
 /* Force symbol to be entered in the output file as an undefined symbol. Doing
@@ -37,9 +46,12 @@ EXTERN(Reset_Handler)
 */
 MEMORY
 {
-    /* The ram and flash regions control RAM and flash memory allocation for the CM4 core.
+    /* The ram and flash regions control RAM and flash memory allocation for the CM0+ core.
+     * You can change the memory allocation by editing the 'ram' and 'flash' regions.
      * Note that 2 KB of RAM (at the end of the SRAM) are reserved for system use.
      * Using this memory region for other purposes will lead to unexpected behavior.
+     * Your changes must be aligned with the corresponding memory regions for the CM4 core in 'xx_cm4_dual.ld',
+     * where 'xx' is the device group; for example, 'cy8c6xx7_cm4_dual.ld'.
      */
     ram_common (rwx) : ORIGIN = RAM_COMMON_ORIGIN, LENGTH = RAM_COMMON_SIZE
 
@@ -48,11 +60,18 @@ MEMORY
     */ 
     ram_app0    (rwx) : ORIGIN = 0x08000400, LENGTH = 0x8000
     ram_app1    (rwx) : ORIGIN = 0x08000400, LENGTH = 0x8000
-            
+              
     flash_app0  (rx)  : ORIGIN = 0x10000000, LENGTH = 0x10000
     flash_app1  (rx)  : ORIGIN = 0x10050000, LENGTH = 0x10000
 
     flash_boot_meta   (rw)  : ORIGIN = 0x101FFA00, LENGTH = 0x400
+
+    /* This is an unprotected public RAM region, with the placed .cy_sharedmem.
+     * This region is used to place objects that require full access from both cores.
+     * Uncomment the following line, define the region origin and length, and uncomment the placement of
+     * the .cy_sharedmem section below.
+     */
+    /* public_ram        (rw)    : ORIGIN = %REGION_START_ADDRESS%, LENGTH = %REGION_SIZE% */
 
     /* This is a 32K flash region used for EEPROM emulation. This region can also be used as the general purpose flash.
      * You can assign sections to this memory region for only one of the cores.
@@ -60,7 +79,6 @@ MEMORY
      * Therefore, repurposing this memory region will prevent such middleware from operation.
      */
     em_eeprom         (rx)    : ORIGIN = 0x14000000, LENGTH = 0x8000       /*  32 KB */
-
 
     /* The following regions define device specific memory regions and must not be changed. */
     sflash_user_data  (rx)    : ORIGIN = 0x16000800, LENGTH = 0x800        /* Supervisory flash: User data */
@@ -125,7 +143,7 @@ __cy_app_verify_length = LENGTH(flash) - __cy_boot_signature_size;
 GROUP(libgcc.a libc.a libm.a libnosys.a)
 
 /* Linker script to place sections and symbol values. Should be used together
- * with other linker script that defines memory regions flash and RAM.
+ * with other linker script that defines memory regions FLASH and RAM.
  * It references following symbols, which must be defined in code:
  *   Reset_Handler : Entry of reset handler
  *
@@ -227,7 +245,7 @@ SECTIONS
 
     /* To copy multiple ROM to RAM sections,
      * uncomment .copy.table section and,
-     * define __STARTUP_COPY_MULTIPLE in startup_psoc6_01_cm4.S */
+     * define __STARTUP_COPY_MULTIPLE in startup_psoc6_02_cm0plus.S */
     .copy.table :
     {
         . = ALIGN(4);
@@ -249,7 +267,7 @@ SECTIONS
 
     /* To clear multiple BSS sections,
      * uncomment .zero.table section and,
-     * define __STARTUP_CLEAR_BSS_MULTIPLE in startup_psoc6_01_cm0p.S */
+     * define __STARTUP_CLEAR_BSS_MULTIPLE in startup_psoc6_02_cm0plus.S */
     .zero.table :
     {
         . = ALIGN(4);
@@ -270,8 +288,9 @@ SECTIONS
     } > ram
 
 
-    .data __ram_vectors_end__ : AT (__etext)
+    .data __ram_vectors_end__ :
     {
+        . = ALIGN(4);
         __data_start__ = .;
 
         *(vtable)
@@ -290,7 +309,6 @@ SECTIONS
         KEEP(*(.init_array))
         PROVIDE_HIDDEN (__init_array_end = .);
 
-
         . = ALIGN(4);
         /* finit data */
         PROVIDE_HIDDEN (__fini_array_start = .);
@@ -306,7 +324,7 @@ SECTIONS
 
         __data_end__ = .;
 
-    } > ram
+    } > ram AT>flash
 
 
     /* Place variables in the section that should not be initialized during the
@@ -352,6 +370,18 @@ SECTIONS
     } > ram
 
 
+    /* To use unprotected public RAM, uncomment the following .cy_sharedmem section placement.*/
+    /*
+    .cy_sharedmem (NOLOAD):
+    {
+        . = ALIGN(4);
+        __public_ram_start__ = .;
+        KEEP(*(.cy_sharedmem))
+        . = ALIGN(4);
+        __public_ram_end__ = .;
+    } > public_ram
+    */
+
     /* .stack_dummy section doesn't contains any symbols. It is only
      * used for linker to calculate size of stack sections, and assign
      * values to stack symbols later */
@@ -373,7 +403,6 @@ SECTIONS
         KEEP(*(.cy_boot_noinit.appId));
     } > ram_common    
 
-
     /* Set stack top to end of RAM, and stack limit move down by
      * size of stack_dummy section */
     __StackTop = ORIGIN(ram) + LENGTH(ram);
@@ -394,42 +423,42 @@ SECTIONS
     } > flash = 0
 
 
-    /* Emulated EEPROM flash area */
+    /* Emulated EEPROM Flash area */
     .cy_em_eeprom :
     {
         KEEP(*(.cy_em_eeprom))
     } > em_eeprom
 
 
-    /* Supervisory flash: User data */
+    /* Supervisory Flash: User data */
     .cy_sflash_user_data :
     {
         KEEP(*(.cy_sflash_user_data))
     } > sflash_user_data
 
 
-    /* Supervisory flash: Normal Access Restrictions (NAR) */
+    /* Supervisory Flash: Normal Access Restrictions (NAR) */
     .cy_sflash_nar :
     {
         KEEP(*(.cy_sflash_nar))
     } > sflash_nar
 
 
-    /* Supervisory flash: Public Key */
+    /* Supervisory Flash: Public Key */
     .cy_sflash_public_key :
     {
         KEEP(*(.cy_sflash_public_key))
     } > sflash_public_key
 
 
-    /* Supervisory flash: Table of Content # 2 */
+    /* Supervisory Flash: Table of Content # 2 */
     .cy_toc_part2 :
     {
         KEEP(*(.cy_toc_part2))
     } > sflash_toc_2
 
-    
-    /* Supervisory flash: Table of Content # 2 Copy */
+
+    /* Supervisory Flash: Table of Content # 2 Copy */
     .cy_rtoc_part2 :
     {
         KEEP(*(.cy_rtoc_part2))
@@ -439,9 +468,11 @@ SECTIONS
     /* Places the code in the Execute in Place (XIP) section. See the smif driver
     *  documentation for details.
     */
-    .cy_xip :
+    cy_xip :
     {
+        __cy_xip_start = .;
         KEEP(*(.cy_xip))
+        __cy_xip_end = .;
     } > xip
 
 
@@ -460,17 +491,17 @@ SECTIONS
 
 
 /* The following symbols used by the cymcuelftool. */
-/* flash */
+/* Flash */
 __cy_memory_0_start    = 0x10000000;
 __cy_memory_0_length   = 0x00200000;
 __cy_memory_0_row_size = 0x200;
 
-/* Emulated EEPROM flash area */
+/* Emulated EEPROM Flash area */
 __cy_memory_1_start    = 0x14000000;
 __cy_memory_1_length   = 0x8000;
 __cy_memory_1_row_size = 0x200;
 
-/* Supervisory flash */
+/* Supervisory Flash */
 __cy_memory_2_start    = 0x16000000;
 __cy_memory_2_length   = 0x8000;
 __cy_memory_2_row_size = 0x200;

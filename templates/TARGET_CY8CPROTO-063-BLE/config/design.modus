@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration app="BACKEND" formatVersion="13" lastSavedWith="Configurator Backend" lastSavedWithVersion="3.0.0" toolsPackage="ModusToolbox 3.0.0" xmlns="http://cypress.com/xsd/cydesignfile_v4">
+<Configuration app="BACKEND" formatVersion="13" lastSavedWith="Configurator Backend" lastSavedWithVersion="3.10.0" toolsPackage="ModusToolbox 3.1.0" xmlns="http://cypress.com/xsd/cydesignfile_v4">
     <Devices>
         <Device mpn="CYBLE-416045-02/CYBLE-416045-02-device">
             <BlockConfig>
                 <Block location="bless[0]">
                     <Alias value="CYBSP_BLE"/>
+                    <Personality template="mxs40ble" version="1.1">
+                        <Param id="BleSharing" value="0"/>
+                        <Param id="ExtPaLnaEnable" value="false"/>
+                    </Personality>
                 </Block>
                 <Block location="cpuss[0].dap[0]">
                     <Personality template="dap" version="2.0">
@@ -252,6 +256,7 @@
                     <Personality template="fll" version="4.0">
                         <Param id="configuration" value="auto"/>
                         <Param id="desiredFrequency" value="100.000"/>
+                        <Param id="enableOutputDivider" value="false"/>
                     </Personality>
                 </Block>
                 <Block location="srss[0].clock[0].hfclk[0]">

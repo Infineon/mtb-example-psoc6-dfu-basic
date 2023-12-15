@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration app="BACKEND" formatVersion="13" lastSavedWith="Configurator Backend" lastSavedWithVersion="3.0.0" toolsPackage="ModusToolbox 3.0.0" xmlns="http://cypress.com/xsd/cydesignfile_v4">
+<Configuration app="BACKEND" formatVersion="13" lastSavedWith="Configurator Backend" lastSavedWithVersion="3.10.0" toolsPackage="ModusToolbox 3.1.0" xmlns="http://cypress.com/xsd/cydesignfile_v4">
     <Devices>
         <Device mpn="CY8C6245LQI-S3D72">
             <BlockConfig>
@@ -395,7 +395,7 @@
                 </Block>
                 <Block location="peri[0].div_16[0]">
                     <Personality template="pclk" version="3.0">
-                        <Param id="intDivider" value="1000"/>
+                        <Param id="intDivider" value="480"/>
                         <Param id="fracDivider" value="0"/>
                         <Param id="startOnReset" value="true"/>
                     </Personality>
@@ -411,14 +411,14 @@
                 </Block>
                 <Block location="peri[0].div_8[1]">
                     <Personality template="pclk" version="3.0">
-                        <Param id="intDivider" value="8"/>
+                        <Param id="intDivider" value="4"/>
                         <Param id="fracDivider" value="0"/>
                         <Param id="startOnReset" value="true"/>
                     </Personality>
                 </Block>
                 <Block location="peri[0].div_8[2]">
                     <Personality template="pclk" version="3.0">
-                        <Param id="intDivider" value="109"/>
+                        <Param id="intDivider" value="52"/>
                         <Param id="fracDivider" value="0"/>
                         <Param id="startOnReset" value="true"/>
                     </Personality>
@@ -510,11 +510,12 @@
                     <Personality template="fll" version="4.0">
                         <Param id="configuration" value="auto"/>
                         <Param id="desiredFrequency" value="100.000"/>
+                        <Param id="enableOutputDivider" value="false"/>
                     </Personality>
                 </Block>
                 <Block location="srss[0].clock[0].hfclk[0]">
                     <Personality template="hfclk" version="3.0">
-                        <Param id="sourceClockNumber" value="0"/>
+                        <Param id="sourceClockNumber" value="1"/>
                         <Param id="divider" value="1"/>
                     </Personality>
                 </Block>
@@ -610,27 +611,8 @@
                     </Personality>
                 </Block>
                 <Block location="usb[0]">
-                    <Alias value="DFU_USB_CDC"/>
-                    <Personality template="mxs40usbfsdevice" version="1.1">
-                        <Param id="epMask" value="255"/>
-                        <Param id="mngMode" value="CY_USBFS_DEV_DRV_EP_MANAGEMENT_CPU"/>
-                        <Param id="bufSize" value="512"/>
-                        <Param id="epAccess" value="CY_USBFS_DEV_DRV_USE_8_BITS_DR"/>
-                        <Param id="enableLpm" value="false"/>
-                        <Param id="lpmIntr" value="0x0U"/>
-                        <Param id="ArbIntr" value="0x0U"/>
-                        <Param id="ep0CntrIntr" value="0x2U"/>
-                        <Param id="busResetIntr" value="0x2U"/>
-                        <Param id="sofIntr" value="0x1U"/>
-                        <Param id="ep0Intr" value="0x1U"/>
-                        <Param id="ep1Intr" value="0x1U"/>
-                        <Param id="ep2Intr" value="0x1U"/>
-                        <Param id="ep3Intr" value="0x1U"/>
-                        <Param id="ep4Intr" value="0x1U"/>
-                        <Param id="ep5Intr" value="0x1U"/>
-                        <Param id="ep6Intr" value="0x1U"/>
-                        <Param id="ep7Intr" value="0x1U"/>
-                        <Param id="inFlash" value="true"/>
+                    <Personality template="mxs40emusb" version="1.0">
+                        <Param id="mode" value="Device"/>
                     </Personality>
                 </Block>
             </BlockConfig>

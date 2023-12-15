@@ -1,6 +1,6 @@
 /***************************************************************************//**
 * \file transport_spi.c
-* \version 4.20
+* \version 5.0
 *
 * This file provides the source code of the DFU communication APIs
 * for the SCB Component SPI mode.
@@ -77,19 +77,6 @@
 #include "transport_spi.h"
 #include "cy_scb_spi.h"
 
-#if defined(CY_PSOC_CREATOR_USED)
-
-    /* USER CONFIGURABLE: Change the header file based on the I2C component instance name */
-    #include "SPI.h"
-
-    /* USER CONFIGURABLE: Instance name of the I2C component */
-    #define CY_DFU_SPI_INSTANCE     SPI
-
-    #define JOIN_LEVEL2(a, b)       a ## b
-    #define JOIN_LEVEL1(a, b)       JOIN_LEVEL2(a, b)
-    #define CY_DFU_SPI_HW           JOIN_LEVEL1(CY_DFU_SPI_INSTANCE, _SCB__HW)
-    #define SPI_API(fn)             JOIN_LEVEL1(CY_DFU_SPI_INSTANCE, fn)
-#else
 
 /* Includes driver configuration */
 #include "cycfg_peripherals.h"
@@ -111,10 +98,13 @@
 
 #endif /* !defined DFU_SPI_HW */
 
-/* USER CONFIGURABLE: The slave select line constant. Update it based on the
+/*
+* USER CONFIGURABLE: The slave select line constant. Update it based on the
 * pin selected for slave select.
 */
-#define CY_SPI_SLAVE_SELECT     CY_SCB_SPI_SLAVE_SELECT1
+#ifndef CY_SPI_SLAVE_SELECT
+    #define CY_SPI_SLAVE_SELECT     CY_SCB_SPI_SLAVE_SELECT1
+#endif /* CY_SPI_SLAVE_SELECT */
 
 /**
 * SPI_initVar indicates whether the SPI driver has been initialized. The
@@ -164,7 +154,6 @@ static void SPI_Start(void)
     Cy_SCB_SPI_Enable(CY_DFU_SPI_HW);
 }
 
-#endif  /* #if defined(CY_PSOC_CREATOR_USED) */
 
 /* Byte to byte time interval in microseconds. Slave waits for this amount of
  * time between checking whether more data is being received. Slave starts
@@ -185,8 +174,8 @@ static void SPI_Start(void)
 
 /* Return number of bytes to copy into DFU buffer */
 #define SPI_BYTES_TO_COPY(actBufSize, bufSize) \
-                            ( ((uint32)(actBufSize) < (uint32)(bufSize)) ? \
-                                ((uint32) (actBufSize)) : ((uint32) (bufSize)) )
+                            ( ((uint32_t)(actBufSize) < (uint32_t)(bufSize)) ? \
+                                ((uint32_t) (actBufSize)) : ((uint32_t) (bufSize)) )
 
 
 /*******************************************************************************
@@ -204,11 +193,7 @@ static void SPI_Start(void)
 *******************************************************************************/
 void SPI_SpiCyBtldrCommStart(void)
 {
-    #if defined(CY_PSOC_CREATOR_USED)
-        SPI_API(_Start)();
-    #else
-        SPI_Start();
-    #endif /* #if defined(CY_PSOC_CREATOR_USED) */
+    SPI_Start();
 }
 
 
@@ -223,6 +208,7 @@ void SPI_SpiCyBtldrCommStop(void)
 {
     Cy_SCB_SPI_Disable(CY_DFU_SPI_HW, NULL);
     Cy_SCB_SPI_DeInit(CY_DFU_SPI_HW);
+    SPI_initVar = false;
 }
 
 
@@ -379,78 +365,5 @@ cy_en_dfu_status_t SPI_SpiCyBtldrCommWrite(const uint8_t pData[], uint32_t size,
     return (statusLoc);
 }
 
-
-#ifndef CY_DFU_SPI_TRANSPORT_DISABLE
-
-/*******************************************************************************
-* Function Name: Cy_DFU_TransportRead
-****************************************************************************//**
-*
-* This function documentation is part of the DFU SDK API, see the
-* cy_dfu.h file or DFU SDK API Reference Manual for details.
-*
-*******************************************************************************/
-cy_en_dfu_status_t Cy_DFU_TransportRead(uint8_t buffer[], uint32_t size, uint32_t *count, uint32_t timeout)
-{
-    return (SPI_SpiCyBtldrCommRead(buffer, size, count, timeout));
-}
-
-
-/*******************************************************************************
-* Function Name: Cy_DFU_TransportWrite
-****************************************************************************//**
-*
-* This function documentation is part of the DFU SDK API, see the
-* cy_dfu.h file or DFU SDK API Reference Manual for details.
-*
-*******************************************************************************/
-cy_en_dfu_status_t Cy_DFU_TransportWrite(uint8_t buffer[], uint32_t size, uint32_t *count, uint32_t timeout)
-{
-    return (SPI_SpiCyBtldrCommWrite(buffer, size, count, timeout));
-}
-
-
-/*******************************************************************************
-* Function Name: Cy_DFU_TransportReset
-****************************************************************************//**
-*
-* This function documentation is part of the DFU SDK API, see the
-* cy_dfu.h file or DFU SDK API Reference Manual for details.
-*
-*******************************************************************************/
-void Cy_DFU_TransportReset(void)
-{
-    SPI_SpiCyBtldrCommReset();
-}
-
-
-/*******************************************************************************
-* Function Name: Cy_DFU_TransportStart
-****************************************************************************//**
-*
-* This function documentation is part of the DFU SDK API, see the
-* cy_dfu.h file or DFU SDK API Reference Manual for details.
-*
-*******************************************************************************/
-void Cy_DFU_TransportStart(void)
-{
-    SPI_SpiCyBtldrCommStart();
-}
-
-
-/*******************************************************************************
-* Function Name: Cy_DFU_TransportStop
-****************************************************************************//**
-*
-* This function documentation is part of the DFU SDK API, see the
-* cy_dfu.h file or DFU SDK API Reference Manual for details.
-*
-*******************************************************************************/
-void Cy_DFU_TransportStop(void)
-{
-    SPI_SpiCyBtldrCommStop();
-}
-
-#endif /* CY_DFU_SPI_TRANSPORT_DISABLE */
 
 /* [] END OF FILE */

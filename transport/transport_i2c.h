@@ -1,6 +1,6 @@
 /***************************************************************************//**
 * \file transport_i2c.h
-* \version 4.20
+* \version 5.0
 *
 * This file provides constants and parameter values of the DFU
 * communication APIs for the SCB Component.
@@ -82,8 +82,8 @@ extern "C" {
 ***************************************/
 
 extern bool I2C_initVar;
-   
-    
+
+
 /***************************************
 *        Function Prototypes
 ***************************************/

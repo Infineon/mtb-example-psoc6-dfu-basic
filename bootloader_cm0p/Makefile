@@ -3,7 +3,7 @@
 # \version 1.0
 #
 # \brief
-# Makefile for configuring the Cortex-M0+ bootloader project
+# Makefile for configurating the Cortex-M0+ bootloader project
 #
 ################################################################################
 # \copyright
@@ -56,7 +56,7 @@ CY_IGNORE=./build
 # ... then code in directories named COMPONENT_foo and COMPONENT_bar will be
 # added to the build
 #
-COMPONENTS=
+COMPONENTS=USBD_BASE
 
 # Like COMPONENTS, but disable optional code that was enabled by default.
 DISABLE_COMPONENTS+=CM0P_SECURE CM0P_CRYPTO CM0P_BLESS
@@ -77,7 +77,7 @@ INCLUDES=
 
 # Add additional defines to the build process (without a leading -D).
 # Define appID for bootloader application
-DEFINES+=CY_APP_ID=0
+DEFINES+=CY_APP_ID=0 USBD_DISABLE_STANDARD_OUTPUT=1
 
 # Defining the address for ram common region
 RAM_COMMON_START=0x08000000
@@ -131,13 +131,18 @@ POSTBUILD=
 #DFU_PATH=$(SEARCH_dfu)/config/CAT1A
 
 ifeq ($(TRANSPORT_OPT), I2C)
+    COMPONENTS+= DFU_I2C_PDL
     $(info Selected I2C transport for DFU.)
 else ifeq ($(TRANSPORT_OPT), UART)
+    COMPONENTS+= DFU_UART_PDL
     $(info Selected UART transport for DFU.)
-else ifeq ($(TRANSPORT_OPT), USB_CDC)
-    $(info Selected USB_CDC transport for DFU.)
 else ifeq ($(TRANSPORT_OPT), SPI)
-    $(info Selected SPI transport for DFU.)    
+    COMPONENTS+= DFU_SPI_PDL
+    $(info Selected SPI transport for DFU.)
+else ifeq ($(TRANSPORT_OPT), EMUSB_CDC)
+    COMPONENTS+= DFU_EMUSB_CDC
+    CY_IGNORE+=./imports/dfu
+    $(info Selected EMUSB_CDC transport for DFU.)    
 else
     $(error Unknown DFU transport selected !.)
 endif
@@ -170,11 +175,5 @@ CY_GETLIBS_SHARED_PATH=../..
 # Directory name of the shared repo location.
 #
 CY_GETLIBS_SHARED_NAME=mtb_shared
-
-# Absolute path to the compiler's "bin" directory.
-#
-# The default depends on the selected TOOLCHAIN (GCC_ARM uses the ModusToolbox
-# IDE provided compiler by default).
-CY_COMPILER_PATH=
 
 include $(CY_TOOLS_DIR)/make/start.mk

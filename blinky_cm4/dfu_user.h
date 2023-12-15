@@ -1,11 +1,14 @@
-/***************************************************************************//**
-* \file dfu_user.h
-* \version 4.10
+/******************************************************************************
+* File Name:   dfu_user.h
 *
+* Description:
 * This file provides declarations that can be modified by the user but
 * are used by the DFU SDK.
 *
-********************************************************************************
+* Related Document: See README.md
+*
+*
+*******************************************************************************
 * Copyright 2021-2023, Cypress Semiconductor Corporation (an Infineon company) or
 * an affiliate of Cypress Semiconductor Corporation.  All rights reserved.
 *
@@ -54,6 +57,23 @@ extern "C" {
 * \{
 */
 
+#ifndef CY_DFU_LOG_LEVEL
+    #define CY_DFU_LOG_LEVEL CY_DFU_LOG_LEVEL_OFF /**< Defines log level */
+#endif
+
+#ifndef CY_DFU_FLOW
+/** Configuration option to select DFU flow */
+#define CY_DFU_FLOW                     (CY_DFU_BASIC_FLOW)
+#endif /* CY_DFU_FLOW */
+
+#define CY_DFU_BASIC_FLOW               (0U) /**< Option 1: DFU Basic flow */
+#define CY_DFU_MCUBOOT_FLOW             (1U) /**< Option 2: DFU Transport for MCUBoot flow */
+
+#if (CY_DFU_FLOW == CY_DFU_MCUBOOT_FLOW) && !defined CY_DFU_PRODUCT
+#define CY_DFU_PRODUCT          (0x01020304)  /**< Default value for Product ID*/
+#warning CY_DFU_PRODUCT is set to default value
+#endif /* (CY_DFU_FLOW == CY_DFU_MCUBOOT_FLOW) && !defined CY_DFU_PRODUCT */
+
 /** The size of a buffer to hold DFU commands */
 /* 16 bytes is a maximum overhead of a DFU packet and additional data for the Program Data command */
 #define CY_DFU_SIZEOF_CMD_BUFFER  (CY_FLASH_SIZEOF_ROW + 16U)
@@ -65,7 +85,9 @@ extern "C" {
 * Set to non-zero for the DFU SDK Program Data command to check
 * if the Golden image is going to be overwritten while updating.
 */
-#define CY_DFU_OPT_GOLDEN_IMAGE    (0)
+#ifndef CY_DFU_OPT_GOLDEN_IMAGE
+    #define CY_DFU_OPT_GOLDEN_IMAGE    (0)
+#endif /* CY_DFU_OPT_GOLDEN_IMAGE */
 
 /**
 * List of Golden Image Application IDs.
@@ -78,7 +100,9 @@ extern "C" {
 * later it is used in cy_dfu.c file:
 * \code uint8_t goldenImages[] = { CY_DFU_GOLDEN_IMAGE_IDS() }; \endcode
 */
-#define CY_DFU_GOLDEN_IMAGE_IDS()  0U
+#ifndef CY_DFU_GOLDEN_IMAGE_IDS
+    #define CY_DFU_GOLDEN_IMAGE_IDS()  0U
+#endif /* CY_DFU_GOLDEN_IMAGE_IDS */
 
 /**
 * The number of applications in the metadata,
@@ -87,17 +111,25 @@ extern "C" {
 *
 * The smallest metadata size if CY_DFU_MAX_APPS * 8 (bytes per one app) + 4 (bytes for CRC-32C)
 */
-#define CY_DFU_MAX_APPS            (2U)
+#ifndef CY_DFU_MAX_APPS
+    #define CY_DFU_MAX_APPS            (2U)
+#endif /* CY_DFU_MAX_APPS */
 
 
 /** A non-zero value enables the Verify Data DFU command  */
-#define CY_DFU_OPT_VERIFY_DATA     (1)
+#ifndef CY_DFU_OPT_VERIFY_DATA
+    #define CY_DFU_OPT_VERIFY_DATA     (1)
+#endif /* CY_DFU_OPT_VERIFY_DATA */
 
 /** A non-zero value enables the Erase Data DFU command   */
-#define CY_DFU_OPT_ERASE_DATA      (1)
+#ifndef CY_DFU_OPT_ERASE_DATA
+    #define CY_DFU_OPT_ERASE_DATA      (1)
+#endif /* CY_DFU_OPT_ERASE_DATA */
 
 /** A non-zero value enables the Verify App DFU command   */
-#define CY_DFU_OPT_VERIFY_APP      (1)
+#ifndef CY_DFU_OPT_VERIFY_APP
+    #define CY_DFU_OPT_VERIFY_APP      (1)
+#endif /* CY_DFU_OPT_VERIFY_APP */
 
 /**
 * A non-zero value enables the Send Data DFU command.
@@ -110,29 +142,45 @@ extern "C" {
 * \note that \c packetBuffer in this case must be 4 bytes aligned, as
 * \c dataBuffer is required to be 4 bytes aligned.
 */
-#define CY_DFU_OPT_SEND_DATA       (1)
+#ifndef CY_DFU_OPT_SEND_DATA
+    #define CY_DFU_OPT_SEND_DATA       (1)
+#endif /* CY_DFU_OPT_SEND_DATA */
 
 /** A non-zero value enables the Get Metadata DFU command */
-#define CY_DFU_OPT_GET_METADATA    (1)
+#ifndef CY_DFU_OPT_GET_METADATA
+    #define CY_DFU_OPT_GET_METADATA    (1)
+#endif /* CY_DFU_OPT_GET_METADATA */
 
 /** A non-zero value enables the Set EI Vector DFU command */
-#define CY_DFU_OPT_SET_EIVECTOR    (0)
+#ifndef CY_DFU_OPT_SET_EIVECTOR
+    #define CY_DFU_OPT_SET_EIVECTOR    (0)
+#endif /* CY_DFU_OPT_SET_EIVECTOR */
 
-/**
-* A non-zero value allows writing metadata
-* with the Set App Metadata DFU command.
-*/
-#define CY_DFU_METADATA_WRITABLE   (1)
+/** A non-zero value allows writing metadata with the Set App Metadata DFU command. */
+#ifndef CY_DFU_METADATA_WRITABLE
+    #define CY_DFU_METADATA_WRITABLE   (1)
+#endif /* CY_DFU_METADATA_WRITABLE */
 
 /** Non-zero value enables the usage of hardware Crypto API */
-#define CY_DFU_OPT_CRYPTO_HW       (0)
+#ifndef CY_DFU_OPT_CRYPTO_HW
+    #define CY_DFU_OPT_CRYPTO_HW       (0)
+#endif /* CY_DFU_OPT_CRYPTO_HW */
 
 /** A non-zero value enables the usage of CRC-16 for DFU packet verification */
-#define CY_DFU_OPT_PACKET_CRC      (0)
+#ifndef CY_DFU_OPT_PACKET_CRC
+    #define CY_DFU_OPT_PACKET_CRC      (0)
+#endif /* CY_DFU_OPT_PACKET_CRC */
+
+/** A non-zero value enables the user custom command support */
+#ifndef CY_DFU_OPT_CUSTOM_CMD
+    #define CY_DFU_OPT_CUSTOM_CMD      (0)
+#endif /* CY_DFU_OPT_CUSTOM_CMD */
+
 
 /** \} group_dfu_macro_config */
 
-#if !defined(CY_DOXYGEN)
+
+#if (CY_DFU_FLOW == CY_DFU_BASIC_FLOW) && !defined(CY_DOXYGEN)
     #if defined(__ARMCC_VERSION)
         #include "dfu_common.h"
 
@@ -161,7 +209,7 @@ extern "C" {
     #else
         #error "Not implemented for this compiler"
     #endif /* defined(__CC_ARM) */
-#endif /* !defined(CY_DOXYGEN) */
+#endif /* (CY_DFU_FLOW == CY_DFU_BASIC_FLOW) && !defined(CY_DOXYGEN) */
 
 #if defined(__cplusplus)
 }

@@ -3,7 +3,7 @@
 # \version 1.0
 #
 # \brief
-# Makefile for configuring the Cortex-M4 core project
+# Makefile for configurating the Cortex-M4 core project
 #
 ################################################################################
 # \copyright
@@ -136,11 +136,5 @@ CY_GETLIBS_SHARED_PATH=../..
 # Directory name of the shared repo location.
 #
 CY_GETLIBS_SHARED_NAME=mtb_shared
-
-# Absolute path to the compiler's "bin" directory.
-#
-# The default depends on the selected TOOLCHAIN (GCC_ARM uses the ModusToolbox
-# IDE provided compiler by default).
-CY_COMPILER_PATH=
 
 include $(CY_TOOLS_DIR)/make/start.mk
