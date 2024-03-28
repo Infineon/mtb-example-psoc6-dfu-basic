@@ -8,7 +8,7 @@
 * Note that component name has to be I2C.
 *
 *******************************************************************************
-* Copyright 2022-2023, Cypress Semiconductor Corporation (an Infineon company) or
+* Copyright 2022-2024, Cypress Semiconductor Corporation (an Infineon company) or
 * an affiliate of Cypress Semiconductor Corporation.  All rights reserved.
 *
 * This software, including source code, documentation and related

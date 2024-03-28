@@ -7,7 +7,7 @@
 #
 ################################################################################
 # \copyright
-# Copyright 2022-2023, Cypress Semiconductor Corporation (an Infineon company)
+# Copyright 2022-2024, Cypress Semiconductor Corporation (an Infineon company)
 # SPDX-License-Identifier: Apache-2.0
 # 
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -38,7 +38,7 @@ TRANSPORT_OPT?=I2C
 # configurations. If TARGET is manually edited, ensure TARGET_<BSP>.mtb with a
 # valid URL exists in the application, run 'make getlibs' to fetch BSP contents
 # and update or regenerate launch configurations for your IDE.
-TARGET=CY8CPROTO-062-4343W
+TARGET=CY8CPROTO-062S2-43439
 
 # Name of toolchain to use. Options include:
 #
